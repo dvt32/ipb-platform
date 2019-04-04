@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Objects")
@@ -17,11 +18,13 @@ public class IpbObject {
 	private Long id;
 	
 	@NotNull
+	@Column(length = 255)
+	@Size(max = 255)
 	private String name;
 	
+	@NotNull
 	@Lob
 	@Column(length=100000)
-	@NotNull
 	private byte[] description;
 	
 	@NotNull
@@ -31,6 +34,8 @@ public class IpbObject {
 	private double longitude;
 	
 	@NotNull
+	@Column(length = 255)
+	@Size(max = 255)
 	private String type;
 	
 	/*

@@ -25,9 +25,9 @@ public class IpbLandmark {
 	@NotNull
 	private boolean inTop100;
 	
+	@NotNull
 	@Lob
 	@Column(length=100000)
-	@NotNull
 	private byte[] datesNotWorking;
 	
 	/*
