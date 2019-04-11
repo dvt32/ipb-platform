@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.ipb.entity.IpbCategory" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbCategory.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.ipb.db.entity.IpbCategory" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbCategory.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="125" y="30"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.ipb.entity.IpbCategoryObject" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbCategoryObject.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.ipb.db.entity.IpbCategoryObject" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbCategoryObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="338" y="52"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.ipb.entity.IpbCityObject" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbCityObject.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.ipb.db.entity.IpbCityObject" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbCityObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="304" width="168" x="514" y="-81"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.ipb.entity.IpbEvent" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbEvent.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="com.ipb.db.entity.IpbEvent" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbEvent.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="304" width="243" x="713" y="-90"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.ipb.entity.IpbImage" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbImage.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="com.ipb.db.entity.IpbImage" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbImage.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="117" y="348"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.ipb.entity.IpbLandmark" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbLandmark.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="com.ipb.db.entity.IpbLandmark" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbLandmark.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="463" y="417"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.ipb.entity.IpbObject" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbObject.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="com.ipb.db.entity.IpbObject" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="412" width="176" x="625" y="217"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -64,8 +64,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.ipb.entity.IpbProposal" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbProposal.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="com.ipb.db.entity.IpbProposal" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbProposal.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="239" y="640"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +73,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.ipb.entity.IpbProposalFile" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbProposalFile.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="com.ipb.db.entity.IpbProposalFile" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbProposalFile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="250" width="167" x="425" y="567"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,8 +82,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="com.ipb.entity.IpbRoute" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbRoute.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="com.ipb.db.entity.IpbRoute" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbRoute.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="867" y="738"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -91,8 +91,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.ipb.entity.IpbRouteObject" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbRouteObject.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="com.ipb.db.entity.IpbRouteObject" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbRouteObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="181" y="909"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -100,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.ipb.entity.IpbUser" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbUser.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="com.ipb.db.entity.IpbUser" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbUser.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="529" y="1065"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -109,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.ipb.entity.IpbUserCategory" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbUserCategory.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="com.ipb.db.entity.IpbUserCategory" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbUserCategory.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="250" width="168" x="803" y="987"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -118,8 +118,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="com.ipb.entity.IpbVisit" project="ipb-platform" 
-    file="/ipb-platform/src/main/java/com/ipb/entity/IpbVisit.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="com.ipb.db.entity.IpbVisit" project="ipb-platform" 
+    file="/ipb-platform/src/main/java/com/ipb/db/entity/IpbVisit.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="250" width="154" x="212" y="1053"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
