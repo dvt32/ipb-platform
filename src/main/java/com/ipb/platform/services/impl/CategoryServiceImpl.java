@@ -31,20 +31,37 @@ public class CategoryServiceImpl implements CategoryService{
 	
 	@Override
 	public Long save(CategoryRequestDTO category) {
-		CategoryEntity entiity = this.mapper.toEntity(category);
+		CategoryEntity entity = this.mapper.toEntity(category);
 		
 		// if parent id is empty category has not a parent
-		System.out.println(category);
 		if(category.getParentId() != null) {
-			Optional<CategoryEntity> parentCategory = this.repository.findById(category.getParentId());
-			
-			if (!parentCategory.isPresent()) {
-				throw new IllegalArgumentException("Tryed to add a category with non-existant parent category.");
-			}
+			this.checkCategoryExist(
+					category.getParentId(),
+					"Tryed to add a category with non-existant parent category."
+			);
 		}
 
-		CategoryEntity saveEntiity = this.repository.save(entiity);
-		return saveEntiity.getId();
+		CategoryEntity saveEntity = this.repository.save(entity);
+		return saveEntity.getId();
+	}
+
+	@Override
+	public CategoryResponseDTO update(Long categoryId, CategoryRequestDTO category) {
+		CategoryEntity editCategoryEntity = this.checkCategoryExist(
+				categoryId,
+				"Tryed to edit non-existant category."
+		);
+
+		// if parent id is empty category has not a parent
+		if(category.getParentId() != null) {
+			// check the parent whether exists
+			this.checkCategoryExist(category.getParentId(), "Tryed to set non-existant parent category.");
+		}
+
+		editCategoryEntity.setName(category.getName());
+		editCategoryEntity.setParentId(category.getParentId());
+
+		return this.mapper.toDTO(this.repository.save(editCategoryEntity));
 	}
 
 	@Override
@@ -56,7 +73,50 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public CategoryResponseDTO findById(Long id) {
-		return this.mapper.toDTO(this.repository.findById(id).get());
+		CategoryEntity category = this.checkCategoryExist(id, "Tryed to get non-existant category.");
+		return this.mapper.toDTO(category);
 	}
 
+	@Override
+	public boolean deleteById (Long categoryId) {
+		this.checkCategoryExist(categoryId, "Tryed to delete non-existant category.");
+
+		List<CategoryEntity> childrenCategories = this.repository.findAllByParentId(categoryId);
+		if (childrenCategories != null && childrenCategories.size() > 0) {
+			return false;
+		}
+
+		this.repository.deleteById(categoryId);
+		return true;
+	}
+
+
+	@Override
+	public List<CategoryResponseDTO> getChildrenByParentId (Long parentId) {
+
+		this.checkCategoryExist(parentId, "Tryed to get childre from non-existant category.");
+
+		return this.repository
+				.findAllByParentId(parentId)
+				.stream()
+				.map(entity -> mapper.toDTO(entity))
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 *
+	 * @param categoryId - id of the category we want to check
+	 * @param errorMessage if category not exist thow this message
+	 * @return if category exist return category entity else throw IllegalArgumentException
+	 */
+	private CategoryEntity checkCategoryExist(Long categoryId, String errorMessage) {
+
+		Optional<CategoryEntity> category = this.repository.findById(categoryId);
+
+		if (!category.isPresent()) {
+			throw new IllegalArgumentException(errorMessage);
+		}
+
+		return category.get();
+	}
 }
