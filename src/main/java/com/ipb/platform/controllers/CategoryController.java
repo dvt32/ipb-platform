@@ -33,11 +33,12 @@ import lombok.AllArgsConstructor;
 public class CategoryController {
 
 	private CategoryService service;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public List<CategoryResponseDTO> getAll() {
 		return this.service.getAll();
 	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "create", method = RequestMethod.POST, consumes = "application/json")
@@ -64,7 +65,7 @@ public class CategoryController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "delete/id/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public boolean deleteCategoryById(@PathVariable Long id) {
 		return this.service.deleteById(id);
 	}

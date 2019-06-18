@@ -103,12 +103,7 @@ public class CategoryServiceImpl implements CategoryService{
 				.collect(Collectors.toList());
 	}
 
-	/**
-	 *
-	 * @param categoryId - id of the category we want to check
-	 * @param errorMessage if category not exist thow this message
-	 * @return if category exist return category entity else throw IllegalArgumentException
-	 */
+
 	private CategoryEntity checkCategoryExist(Long categoryId, String errorMessage) {
 
 		Optional<CategoryEntity> category = this.repository.findById(categoryId);

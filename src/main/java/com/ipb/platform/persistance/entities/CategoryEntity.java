@@ -33,11 +33,20 @@ public class CategoryEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq")
 	private Long id;
-	
+
+	/**
+	 * Contain parent category id
+	 */
 	private Long parentId;
-	
+
+	/**
+	 *  Contain category name
+	 */
 	private String name;
-	
+
+	/**
+	 * List of all objects that comprise this category
+	 */
 	@ManyToMany(fetch = FetchType.LAZY,
 	     cascade = {
 	         CascadeType.PERSIST,
