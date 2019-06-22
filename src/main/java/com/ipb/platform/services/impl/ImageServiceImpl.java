@@ -11,10 +11,10 @@ import com.ipb.platform.dto.responses.ImageResponseDTO;
 import com.ipb.platform.dto.responses.ObjectResponseDTO;
 import com.ipb.platform.mappers.ImageMapper;
 import com.ipb.platform.mappers.ObjectMapper;
-import com.ipb.platform.persistance.ImageRepository;
-import com.ipb.platform.persistance.ObjectRepository;
-import com.ipb.platform.persistance.entities.ImageEntity;
-import com.ipb.platform.persistance.entities.ObjectEntity;
+import com.ipb.platform.persistence.ImageRepository;
+import com.ipb.platform.persistence.ObjectRepository;
+import com.ipb.platform.persistence.entities.ImageEntity;
+import com.ipb.platform.persistence.entities.ObjectEntity;
 import com.ipb.platform.services.ImageService;
 import com.ipb.platform.services.ObjectService;
 

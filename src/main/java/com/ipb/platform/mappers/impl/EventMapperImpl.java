@@ -9,9 +9,9 @@ import com.ipb.platform.dto.requests.EventRequestDTO;
 import com.ipb.platform.dto.responses.CityResponseDTO;
 import com.ipb.platform.dto.responses.EventResponseDTO;
 import com.ipb.platform.mappers.EventMapper;
-import com.ipb.platform.persistance.entities.CityEntity;
-import com.ipb.platform.persistance.entities.EventEntity;
-import com.ipb.platform.persistance.entities.ObjectType;
+import com.ipb.platform.persistence.entities.CityEntity;
+import com.ipb.platform.persistence.entities.EventEntity;
+import com.ipb.platform.persistence.entities.ObjectType;
 
 import lombok.NoArgsConstructor;
 

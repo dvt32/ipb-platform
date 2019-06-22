@@ -15,4 +15,5 @@ public class CategoryRequestDTO {
 	private Long parentId;
 	
 	private String name;
+
 }

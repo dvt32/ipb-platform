@@ -1,4 +1,4 @@
-package com.ipb.platform.persistance.entities;
+package com.ipb.platform.persistence.entities;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity(name = "objects")
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class ObjectEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "object_seq")
 	private Long id;
@@ -74,4 +74,5 @@ public class ObjectEntity {
 	public void updateDates() {
 		this.modifiedOn = new Date();
 	}*/
+	
 }

@@ -1,7 +1,8 @@
-package com.ipb.platform.persistance;
+package com.ipb.platform.persistence;
 
-import com.ipb.platform.persistance.entities.EventEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ipb.platform.persistence.entities.EventEntity;
 
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
 
