@@ -2,15 +2,12 @@ package com.ipb.platform.persistance.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
@@ -18,7 +15,7 @@ import lombok.Setter;
 @Entity(name = "landmarks")
 public class LandmarkEntity extends ObjectEntity {
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
 	private CityEntity city;
 	
@@ -27,7 +24,10 @@ public class LandmarkEntity extends ObjectEntity {
 	
 	@JoinColumn(name = "in_top_100",  nullable = false)
 	private boolean inTop100;
-	
-	@JoinColumn(name = "dates_not_working",  nullable = false)
-	private byte[] datesNotWorking;
+
+	@OneToMany(mappedBy = "landmark", cascade = CascadeType.ALL)
+	private List<DatesNotWorkingEntity> datesNotWorking;
+
+	@JoinColumn(name = "work_time",  nullable = false)
+	private String workTime;
 }

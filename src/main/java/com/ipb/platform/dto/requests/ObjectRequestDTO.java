@@ -26,5 +26,5 @@ public class ObjectRequestDTO {
 	
 	private List<ImageRequestDTO> images;
 	
-	private List<Long> categoriesID;
+	private List<Long> categories;
 }

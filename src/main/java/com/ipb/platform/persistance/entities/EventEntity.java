@@ -15,7 +15,7 @@ import lombok.Setter;
 @Entity(name = "events")
 public class EventEntity extends ObjectEntity {
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
 	private CityEntity city;
 	
@@ -24,4 +24,7 @@ public class EventEntity extends ObjectEntity {
 	
 	@JoinColumn(name = "end_date",  nullable = false)
 	private long endDate;
+
+	@JoinColumn(name = "work_time",  nullable = false)
+	private String workTime;
 }

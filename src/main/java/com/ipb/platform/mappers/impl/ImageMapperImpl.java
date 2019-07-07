@@ -1,29 +1,22 @@
 package com.ipb.platform.mappers.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import java.io.UnsupportedEncodingException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.ipb.platform.exceptions.IllegalRequestArgumentException;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ipb.platform.dto.requests.ImageRequestDTO;
 import com.ipb.platform.dto.responses.ImageResponseDTO;
-import com.ipb.platform.mappers.ImageMapper;
+import com.ipb.platform.mappers.ImageMapping;
 import com.ipb.platform.persistance.entities.ImageEntity;
 
 import lombok.NoArgsConstructor;
 
 @Service
 @NoArgsConstructor
-public class ImageMapperImpl implements ImageMapper{
+public class ImageMapperImpl implements ImageMapping {
 	
 	@Override
 	public ImageEntity toEntity(ImageRequestDTO image) {
@@ -31,18 +24,17 @@ public class ImageMapperImpl implements ImageMapper{
 
 		String imgURL = image.getPath();
 
-		// check path image is correct
 		if (this.isCorrectURL(imgURL))
 			entity.setPath(imgURL);
 		else
-			throw new IllegalArgumentException("Image path is not correct!!!");
+			throw new IllegalRequestArgumentException("Image path is not correct!!!");
 
-		String base64 =image.getBase64Code();
+		String base64 =image.getBase64code();
 		
 		if(this.isCorrectBase64Code(base64)) 
 			entity.setBase64Code(base64);
 		else 
-			throw new IllegalArgumentException("Base code is not correct!!!");
+			throw new IllegalRequestArgumentException("Base code is not correct!!!");
 		
 		return entity;
 	}
@@ -58,25 +50,15 @@ public class ImageMapperImpl implements ImageMapper{
 		return imageDTO;
 	}
 
-	/**
-	 *  
-	 * @param imgUrl - path to the image
-	 * @return true if imgPath is empty or is correct path. 
-	 * Return false if imgPath not start http:// or https:// and 
-	 * not ends with .jpg or .jpeg or .gif or .png
-	 * 
-	 */
 	private boolean isCorrectURL(String imgUrl) {
 		if (imgUrl == "" || imgUrl == null)
 			return true;
 
-		String pattern = "^(http(s?)://).*\\.(?:jpg|jpeg|png)$";
+		String patternString = "^(http(s?)://).*\\.(?:jpg|jpeg|png)$";
 
-		// Create a Pattern object
-		Pattern patt = Pattern.compile(pattern);
+		Pattern pattern = Pattern.compile(patternString);
 
-		// Now create matcher object.
-		Matcher m = patt.matcher(imgUrl);
+		Matcher m = pattern.matcher(imgUrl);
 
 		return m.matches();
 	}

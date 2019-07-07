@@ -4,7 +4,7 @@ import com.ipb.platform.dto.requests.ImageRequestDTO;
 import com.ipb.platform.dto.responses.ImageResponseDTO;
 import com.ipb.platform.persistance.entities.ImageEntity;
 
-public interface ImageMapper{
+public interface ImageMapping {
 	
 	ImageEntity toEntity(ImageRequestDTO imageDTO);
 	

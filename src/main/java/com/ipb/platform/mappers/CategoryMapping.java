@@ -4,7 +4,7 @@ import com.ipb.platform.dto.requests.CategoryRequestDTO;
 import com.ipb.platform.dto.responses.CategoryResponseDTO;
 import com.ipb.platform.persistance.entities.CategoryEntity;
 
-public interface CategoryMapper{
+public interface CategoryMapping {
 	
 	CategoryEntity toEntity(CategoryRequestDTO city);
 	

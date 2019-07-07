@@ -1,14 +1,8 @@
 package com.ipb.platform.dto.responses;
 
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.JoinColumn;
-
-import com.ipb.platform.persistance.entities.ObjectType;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,5 +18,7 @@ public class LandmarkResponseDTO extends ObjectResponseDTO{
 	
 	private boolean inTop100;
 	
-	private List<Date> datesNotWorking;
+	private List<DatesNotWorkingResponseDTO> datesNotWorking;
+
+	private String workTime;
 }

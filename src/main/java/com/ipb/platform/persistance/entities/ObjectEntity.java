@@ -44,34 +44,17 @@ public class ObjectEntity {
 	@Enumerated(EnumType.STRING)
 	private ObjectType type;
 	
-	@OneToMany(mappedBy = "object", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "object", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ImageEntity> images;
 	
-//	@ManyToMany(mappedBy = "objects", fetch = FetchType.EAGER)
 	@ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                 CascadeType.PERSIST,
-                CascadeType.MERGE
+                CascadeType.MERGE,
             })
     @JoinTable(name = "object_categories",
-            joinColumns = { @JoinColumn(name = "object_id",  referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "category_id",  referencedColumnName = "id") })
+            joinColumns = @JoinColumn(name = "object_id",  referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id",  referencedColumnName = "id"))
 	private List<CategoryEntity> categories;
-	
-	/*@Column(name = "created_on")
-	private Date createdOn;
-	
-	@Column(name = "modified_on")
-	private Date modifiedOn;
-	
-	@PrePersist
-	public void setDates() {
-		this.createdOn = new Date();
-		this.modifiedOn = new Date();
-	}
-	
-	@PreUpdate
-	public void updateDates() {
-		this.modifiedOn = new Date();
-	}*/
+
 }

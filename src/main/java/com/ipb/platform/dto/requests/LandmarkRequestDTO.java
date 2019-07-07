@@ -24,5 +24,7 @@ public class LandmarkRequestDTO extends ObjectRequestDTO{
 	
 	private boolean inTop100;
 	
-	private List<Date> datesNotWorking;
+	private List<DatesNotWorkingRequestDTO> datesNotWorking;
+
+	private String workTime;
 }

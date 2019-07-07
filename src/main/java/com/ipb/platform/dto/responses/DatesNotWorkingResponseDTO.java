@@ -1,21 +1,24 @@
 package com.ipb.platform.dto.responses;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
+// @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventResponseDTO extends ObjectResponseDTO{
-	
-	private long cityId;
-	
+public class DatesNotWorkingResponseDTO{
+
+	private Long id;
+
+    private Long landmarkId;
+
 	private Date startDate;
 	
 	private Date endDate;
 
-	private String workTime;
 }

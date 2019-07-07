@@ -5,9 +5,9 @@ import com.ipb.platform.dto.responses.ObjectResponseDTO;
 import com.ipb.platform.persistance.entities.ObjectEntity;
 import com.ipb.platform.persistance.entities.ObjectType;
 
-public interface ObjectMapper{
+public interface IPBObjectMapping {
 	
-	ObjectEntity toEntity(ObjectRequestDTO objDTO, ObjectType type);
+	ObjectEntity toEntity(ObjectRequestDTO objDTO);
 	
-	ObjectResponseDTO toDTO(ObjectEntity objEntity, ObjectType type); 
+	ObjectResponseDTO toDTO(ObjectEntity objEntity);
 }

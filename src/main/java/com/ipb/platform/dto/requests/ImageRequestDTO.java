@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageRequestDTO {
+
 	private Long ipbObjectId;
 	
-	private String base64Code;
+	private String base64code;
 	
 	private String path;
 }

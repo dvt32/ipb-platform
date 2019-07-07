@@ -8,11 +8,11 @@ import com.ipb.platform.persistance.entities.ObjectEntity;
 
 public interface ImageService {
 	
-	Long save(ImageRequestDTO image);
-	
-	boolean save(List<ImageRequestDTO> images, ObjectEntity objectEntity);
-	
 	List<ImageResponseDTO> findByObjectId(Long id);
 	
 	ImageResponseDTO findById(Long id);
+
+	boolean deleteById(Long id);
+
+	boolean deleteByObjectId(Long objectId);
 }

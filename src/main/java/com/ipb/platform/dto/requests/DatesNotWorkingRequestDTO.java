@@ -1,18 +1,21 @@
 package com.ipb.platform.dto.requests;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ipb.platform.dto.responses.ObjectResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventRequestDTO extends ObjectRequestDTO{
-	private long cityId;
+public class DatesNotWorkingRequestDTO extends ObjectResponseDTO{
+
+	private Long landmarkId;
+
 	private Date startDate;
+	
 	private Date endDate;
-	private String workTime;
+
 }
