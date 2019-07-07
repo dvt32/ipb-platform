@@ -27,7 +27,7 @@ import lombok.ToString;
  * The Hibernate-specific annotation @OnDelete is used
  * so that when the token's associated user has been deleted,
  * the token is automatically deleted as well.
- * 
+ *
  * @author dvt32
  */
 @Getter

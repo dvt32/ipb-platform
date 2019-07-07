@@ -16,4 +16,6 @@ public class EventResponseDTO extends ObjectResponseDTO{
 	private Date startDate;
 	
 	private Date endDate;
+
+	private String workTime;
 }

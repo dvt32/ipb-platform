@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * 
  * @author dvt32
  */
-public interface PasswordResetTokenRepository 
-	extends JpaRepository<PasswordResetToken, Long> 
-{
+public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long> {
 	boolean existsByToken(String token);
 	PasswordResetToken findByToken(String token);
 }

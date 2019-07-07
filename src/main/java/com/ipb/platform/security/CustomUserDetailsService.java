@@ -23,9 +23,7 @@ import com.ipb.platform.persistence.entities.UserEntity;
  * @author dvt32
  */
 @Service
-public class CustomUserDetailsService 
-	implements UserDetailsService 
-{
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;

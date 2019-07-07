@@ -2,7 +2,7 @@
 
 INSERT INTO Users (id, email, password, matching_password, first_name, last_name, birthday, type)
 VALUES (
-	10001,
+	1,
 	'admin@ipb.com',
 	--The password is 'mse2018ipb' encrypted with BCrypt @ https://www.browserling.com/tools/bcrypt 
 	--('mse2018ipb' can be used for login)
@@ -18,7 +18,7 @@ VALUES (
 
 INSERT INTO Users (id, email, password, matching_password, first_name, last_name, birthday, type)
 VALUES (
-	10002,
+	2,
 	'user@ipb.com',
 	--The password is '123456' encrypted with BCrypt @ https://www.browserling.com/tools/bcrypt 
 	--('123456' can be used for login)

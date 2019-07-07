@@ -65,7 +65,6 @@ public class UserProfileController {
 		@RequestParam String matchingNewPassword) 
 	{
 		String loggedInUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-		
 		UserRequestDTO user;
 		try {
 			user = userService.convertResponseDtoToRequestDto( 

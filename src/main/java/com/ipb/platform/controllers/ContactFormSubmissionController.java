@@ -226,42 +226,42 @@ public class ContactFormSubmissionController {
 	 * Extended contact form features below (object & event suggestions)
 	 * ******************************************************************
 	 */
-	
+
 	/**
 	 * This method submits an object suggestion
 	 * by passing the suggested object's data in a POST request's body.
 	 * The data is validated before the suggestion is sent for review by an admin.
-	 * 
+	 *
 	 * @param objectSuggestionRequestDTO An object containing the suggestion's data
 	 * @param bindingResult The validator of the passed data
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping("/object-suggestions")
 	public ResponseEntity<String> addObjectSuggestion(
-		@RequestBody @Valid ObjectSuggestionRequestDTO objectSuggestionRequestDTO, 
-		BindingResult bindingResult) 
+		@RequestBody @Valid ObjectSuggestionRequestDTO objectSuggestionRequestDTO,
+		BindingResult bindingResult)
 	{
 		if (bindingResult.hasErrors()) {
 			String responseErrorMessage = getResponseErrorMessageFromBindingResult(bindingResult);
 			return new ResponseEntity<>(responseErrorMessage, HttpStatus.BAD_REQUEST);
 		}
-		
+
 		String loggedInUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 		objectSuggestionRequestDTO.setSenderEmail(loggedInUserEmail);
-		
+
 		Long createdObjectSuggestionId;
 		try {
 			createdObjectSuggestionId = submissionService.createNewObjectSuggestion(objectSuggestionRequestDTO);
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		
+
 		return new ResponseEntity<>("Successfully submitted object suggestion with ID " + createdObjectSuggestionId, HttpStatus.CREATED);
 	}
-	
+
 	/**
 	 * This method retrieves an object suggestion's data in JSON format.
-	 * 
+	 *
 	 * @param id The id of the object suggestion to be retrieved
 	 * @return a ResponseEntity containing the object suggestion's data and an appropriate response code
 	 */
@@ -269,51 +269,51 @@ public class ContactFormSubmissionController {
 	@Secured({"ROLE_ADMIN"})
 	public ResponseEntity<?> getObjectSuggestionById(@PathVariable Long id) {
 		ObjectSuggestionResponseDTO objectSuggestion = null;
-		
+
 		try {
 			objectSuggestion = submissionService.getObjectSuggestionById(id);
 		} catch (ContactFormSubmissionException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		
+
 		return new ResponseEntity<>(objectSuggestion, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * This method submits an event suggestion
 	 * by passing the suggested event's data in a POST request's body.
 	 * The data is validated before the suggestion is sent for review by an admin.
-	 * 
+	 *
 	 * @param eventSuggestionRequestDTO An object containing the suggestion's data
 	 * @param bindingResult The validator of the passed data
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping("/event-suggestions")
 	public ResponseEntity<String> addEventSuggestion(
-		@RequestBody @Valid EventSuggestionRequestDTO eventSuggestionRequestDTO, 
-		BindingResult bindingResult) 
+		@RequestBody @Valid EventSuggestionRequestDTO eventSuggestionRequestDTO,
+		BindingResult bindingResult)
 	{
 		if (bindingResult.hasErrors()) {
 			String responseErrorMessage = getResponseErrorMessageFromBindingResult(bindingResult);
 			return new ResponseEntity<>(responseErrorMessage, HttpStatus.BAD_REQUEST);
 		}
-		
+
 		String loggedInUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 		eventSuggestionRequestDTO.setSenderEmail(loggedInUserEmail);
-		
+
 		Long createdEventSuggestionId;
 		try {
 			createdEventSuggestionId = submissionService.createNewEventSuggestion(eventSuggestionRequestDTO);
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		
+
 		return new ResponseEntity<>("Successfully submitted event suggestion with ID " + createdEventSuggestionId, HttpStatus.CREATED);
 	}
-	
+
 	/**
 	 * This method retrieves an event suggestion's data in JSON format.
-	 * 
+	 *
 	 * @param id The id of the event suggestion to be retrieved
 	 * @return a ResponseEntity containing the event suggestion's data and an appropriate response code
 	 */
@@ -321,20 +321,20 @@ public class ContactFormSubmissionController {
 	@Secured({"ROLE_ADMIN"})
 	public ResponseEntity<?> getEventSuggestionById(@PathVariable Long id) {
 		EventSuggestionResponseDTO eventSuggestion = null;
-		
+
 		try {
 			eventSuggestion = submissionService.getEventSuggestionById(id);
 		} catch (ContactFormSubmissionException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		
+
 		return new ResponseEntity<>(eventSuggestion, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * This method retrieves all object suggestions (and their associated data) in JSON format.
 	 * Only an administrator has access to this list.
-	 * 
+	 *
 	 * @return the list of object suggestions (empty if no suggestions available)
 	 */
 	@GetMapping("/object-suggestions/all")
@@ -342,11 +342,11 @@ public class ContactFormSubmissionController {
 	public List<ObjectSuggestionResponseDTO> getAllObjectSuggestions() {
 		return submissionService.getAllObjectSuggestions();
 	}
-	
+
 	/**
 	 * This method retrieves all event suggestions (and their associated data) in JSON format.
 	 * Only an administrator has access to this list.
-	 * 
+	 *
 	 * @return the list of event suggestions (empty if no suggestions available)
 	 */
 	@GetMapping("/event-suggestions/all")
@@ -354,20 +354,20 @@ public class ContactFormSubmissionController {
 	public List<EventSuggestionResponseDTO> getAllEventSuggestions() {
 		return submissionService.getAllEventSuggestions();
 	}
-	
+
 	/**
 	 * This method accepts an object suggestion and adds that object to the database.
-	 * The object suggestion is then deleted from the database 
+	 * The object suggestion is then deleted from the database
 	 * and a notification e-mail is sent to the user who suggested the object.
-	 * 
+	 *
 	 * @param id The id of the object suggestion to be accepted
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping("/object-suggestions/{id}/accept")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> acceptObjectSuggestionById(@PathVariable Long id) {
-		String objectSuggestionSenderEmail = null; 
-		
+		String objectSuggestionSenderEmail = null;
+
 		try {
 			objectSuggestionSenderEmail = submissionService.getObjectSuggestionSenderEmailById(id);
 			submissionService.acceptObjectSuggestionById(id);
@@ -376,25 +376,25 @@ public class ContactFormSubmissionController {
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<>(
 				"Successfully accepted & added object to database from suggestion with ID " + id + "! "
-				+ e.getMessage(), 
+				+ e.getMessage(),
 				HttpStatus.OK
 			);
 		}
-		
+
 		return new ResponseEntity<>(
 			"Successfully accepted & added object to database from suggestion with ID " + id + "! "
-			+ "A notification e-mail was sent to " + objectSuggestionSenderEmail, 
+			+ "A notification e-mail was sent to " + objectSuggestionSenderEmail,
 			HttpStatus.OK
 		);
 	}
-	
+
 	/**
-	 * This method rejects an object suggestion 
+	 * This method rejects an object suggestion
 	 * and deletes that suggestion from the database.
-	 * 
-	 * A notification e-mail (with an optional rejection message) 
+	 *
+	 * A notification e-mail (with an optional rejection message)
 	 * is sent to the user who suggested the object.
-	 * 
+	 *
 	 * @param id The id of the object suggestion to be rejected
 	 * @param rejectionMessage an optional rejection message, which will be part of the notification email
 	 * @return a ResponseEntity object with either a success or an error message.
@@ -402,11 +402,11 @@ public class ContactFormSubmissionController {
 	@PostMapping("/object-suggestions/{id}/reject")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> rejectObjectSuggestionById(
-		@PathVariable Long id, 
-		@RequestParam(name="message", required=false) String rejectionMessage) 
+		@PathVariable Long id,
+		@RequestParam(name="message", required=false) String rejectionMessage)
 	{
 		String objectSuggestionSenderEmail = null;
-		
+
 		try {
 			objectSuggestionSenderEmail = submissionService.getObjectSuggestionSenderEmailById(id);
 			submissionService.rejectObjectSuggestionById(id, rejectionMessage);
@@ -415,67 +415,67 @@ public class ContactFormSubmissionController {
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<>(
 				"Successfully rejected object suggestion with ID " + id + "! "
-				+ e.getMessage(), 
+				+ e.getMessage(),
 				HttpStatus.OK
 			);
 		}
-		
+
 		return new ResponseEntity<>(
 			"Successfully rejected object suggestion with ID " + id + "! "
-			+ "A notification e-mail was sent to " + objectSuggestionSenderEmail, 
+			+ "A notification e-mail was sent to " + objectSuggestionSenderEmail,
 			HttpStatus.OK
 		);
 	}
-	
+
 	/**
 	 * This method accepts an event suggestion and adds that event to the database.
-	 * The event suggestion is then deleted from the database 
+	 * The event suggestion is then deleted from the database
 	 * and a notification e-mail is sent to the user who suggested the event.
-	 * 
+	 *
 	 * @param id The id of the event suggestion to be accepted
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping("/event-suggestions/{id}/accept")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> acceptEventSuggestionById(@PathVariable Long id) {
-		String eventSuggestionSenderEmail = null; 
-		
+		String eventSuggestionSenderEmail = null;
+
 		try {
 			eventSuggestionSenderEmail = submissionService.getEventSuggestionSenderEmailById(id);
 			submissionService.acceptEventSuggestionById(id);
 		} catch (ContactFormSubmissionException e) {
 			return new ResponseEntity<>(
-				e.getMessage(), 
+				e.getMessage(),
 				HttpStatus.NOT_FOUND
 			);
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<>(
 				"Successfully accepted & added event to database from suggestion with ID " + id + "! "
-				+ e.getMessage(), 
+				+ e.getMessage(),
 				HttpStatus.OK
 			);
 		} catch (CityNotFoundException e) {
 			return new ResponseEntity<>(
 				"Failed to accept event suggestion with ID " + id + "! "
-				+ e.getMessage(), 
+				+ e.getMessage(),
 				HttpStatus.NOT_FOUND
 			);
 		}
-		
+
 		return new ResponseEntity<>(
 			"Successfully accepted & added event to database from suggestion with ID " + id + "! "
-			+ "A notification e-mail was sent to " + eventSuggestionSenderEmail, 
+			+ "A notification e-mail was sent to " + eventSuggestionSenderEmail,
 			HttpStatus.OK
 		);
 	}
 
 	/**
-	 * This method rejects an event suggestion 
+	 * This method rejects an event suggestion
 	 * and deletes that suggestion from the database.
-	 * 
-	 * A notification e-mail (with an optional rejection message) 
+	 *
+	 * A notification e-mail (with an optional rejection message)
 	 * is sent to the user who suggested the event.
-	 * 
+	 *
 	 * @param id The id of the event suggestion to be rejected
 	 * @param rejectionMessage an optional rejection message, which will be part of the notification email
 	 * @return a ResponseEntity object with either a success or an error message.
@@ -483,11 +483,11 @@ public class ContactFormSubmissionController {
 	@PostMapping("/event-suggestions/{id}/reject")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> rejectEventSuggestionById(
-		@PathVariable Long id, 
-		@RequestParam(name="message", required=false) String rejectionMessage) 
+		@PathVariable Long id,
+		@RequestParam(name="message", required=false) String rejectionMessage)
 	{
 		String eventSuggestionSenderEmail = null;
-		
+
 		try {
 			eventSuggestionSenderEmail = submissionService.getEventSuggestionSenderEmailById(id);
 			submissionService.rejectEventSuggestionById(id, rejectionMessage);
@@ -496,16 +496,16 @@ public class ContactFormSubmissionController {
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<>(
 				"Successfully rejected event suggestion with ID " + id + "! "
-				+ e.getMessage(), 
+				+ e.getMessage(),
 				HttpStatus.OK
 			);
 		}
-		
+
 		return new ResponseEntity<>(
 			"Successfully rejected event suggestion with ID " + id + "! "
-			+ "A notification e-mail was sent to " + eventSuggestionSenderEmail, 
+			+ "A notification e-mail was sent to " + eventSuggestionSenderEmail,
 			HttpStatus.OK
 		);
 	}
-	
+
 }

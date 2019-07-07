@@ -15,6 +15,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * An instance of this class is used 
  * when making HTTP requests related to users 
@@ -67,5 +69,6 @@ public class UserRequestDTO {
     private java.sql.Date birthday;
 	
 	private UserType type;
-	
+
+	private List<Long> categories;
 }

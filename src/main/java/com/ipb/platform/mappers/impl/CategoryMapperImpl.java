@@ -4,14 +4,14 @@ import org.springframework.stereotype.Service;
 
 import com.ipb.platform.dto.requests.CategoryRequestDTO;
 import com.ipb.platform.dto.responses.CategoryResponseDTO;
-import com.ipb.platform.mappers.CategoryMapper;
+import com.ipb.platform.mappers.CategoryMapping;
 import com.ipb.platform.persistence.entities.CategoryEntity;
 
 import lombok.NoArgsConstructor;
 
 @Service
 @NoArgsConstructor
-public class CategoryMapperImpl implements CategoryMapper{
+public class CategoryMapperImpl implements CategoryMapping {
 	
 	@Override
 	public CategoryEntity toEntity(CategoryRequestDTO category) {

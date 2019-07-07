@@ -1,13 +1,6 @@
 package com.ipb.platform.persistence.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,11 +8,13 @@ import javax.validation.constraints.Size;
 import com.ipb.platform.validation.PasswordMatches;
 import com.ipb.platform.validation.ValidEmail;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import lombok.AllArgsConstructor;
 import lombok.ToString;
+import java.util.List;
 
 /**
  * This class represents a "user" entity in the database.
@@ -68,5 +63,22 @@ public class UserEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private UserType type;
+
+
+	@OneToMany(mappedBy = "creator")
+	private List<RouteEntity> routes;
+
+	@OneToMany(mappedBy = "creator")
+	private List<ObjectEntity> objects;
+
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+			})
+	@JoinTable(name = "user_categories",
+			joinColumns = @JoinColumn(name = "user_id",  referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id",  referencedColumnName = "id"))
+	private List<CategoryEntity> categories;
 	
 }

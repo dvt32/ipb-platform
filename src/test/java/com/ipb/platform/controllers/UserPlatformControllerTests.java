@@ -32,11 +32,11 @@ import com.ipb.platform.persistence.entities.UserType;
 
 /**
  * This class implements integration tests for the UserProfileController class.
- * 
- * The @Transactional annotation is used to rollback 
+ *
+ * The @Transactional annotation is used to rollback
  * database changes (made via a MockMvc request)
  * after the annotated test has finished executing.
- * 
+ *
  * @author dvt32
  */
 @RunWith(SpringRunner.class)
@@ -45,20 +45,20 @@ public class UserPlatformControllerTests {
 
 	@Autowired
     private UserProfileController userProfileController;
-	
+
 	@Autowired
 	private WebApplicationContext context;
-	
+
 	private MockMvc mockMvc;
-	
+
 	@Autowired
     private UserRepository userRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	/**
-	 * Set context & configure Spring Security 
+	 * Set context & configure Spring Security
 	 * for testing secured methods / REST endpoints.
 	 */
 	@Before
@@ -68,39 +68,39 @@ public class UserPlatformControllerTests {
           .apply(springSecurity())
           .build();
     }
-	
+
 	/**
      * Smoke test (tests if the controller loads properly)
      */
     @Test
-    public void controllerShouldNotBeNull() 
-    	throws Exception 
+    public void controllerShouldNotBeNull()
+    	throws Exception
     {
         assertThat(userProfileController).isNotNull();
     }
-    
+
     /**
      * changePassword() tests
-     * (POST "/profile/change-password" with request params 
+     * (POST "/profile/change-password" with request params
      * "oldPassword", "newPassword", "matchingNewPassword")
      */
 
     @Test
     @Transactional
     public void changePasswordMethodShouldReturnUnauthorizedStatusCode() throws Exception {
-        this.mockMvc.perform( 
+        this.mockMvc.perform(
         	post("/profile/change-password")
         		.param("oldPassword", "123456")
         		.param("newPassword", "123456789")
         		.param("matchingNewPassword", "123456789")
         ).andExpect( status().isUnauthorized() );
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER")
     public void changePasswordMethodShouldReturnNotFoundStatusCodeBecauseOfMissingUser() throws Exception {
-        MvcResult result = this.mockMvc.perform( 
+        MvcResult result = this.mockMvc.perform(
         	post("/profile/change-password")
         		.param("oldPassword", "123456")
         		.param("newPassword", "123456789")
@@ -108,39 +108,42 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isNotFound() )
         	.andReturn();
-        
+
         // Test if the response string is an error message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("User with this e-mail does not exist!");
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void changePasswordMethodShouldReturnOKStatusCode() throws Exception {
     	// Insert test user with the logged in mock user's data
     	String encodedPassword = passwordEncoder.encode("123456");
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			/*
-	    			NOTE: Passwords are stored encrypted in the database 
-	    			and when attempting to update a user's password via the UserService, 
+	    			NOTE: Passwords are stored encrypted in the database
+	    			and when attempting to update a user's password via the UserService,
 	    			the service compares the passed old password to its encoded equivalent.
 	    			That's why we need the test user's password to be encoded.
     			*/
     			encodedPassword,
-    			encodedPassword, 
-    			"Ivan", 
+    			encodedPassword,
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	// Test if the response code is 200 OK
-        MvcResult result = this.mockMvc.perform( 
+        MvcResult result = this.mockMvc.perform(
         	post("/profile/change-password")
         		.param("oldPassword", "123456")
         		.param("newPassword", "123456789")
@@ -148,47 +151,50 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isOk() )
         	.andReturn();
-        
+
         // Test if the response string is a success message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("Successfully updated password!");
-    	
+
     	// Test if the user's info has been updated
     	Long testUserId = testUser.getId();
     	String testUserEncryptedPassword = userRepository.findById(testUserId).get().getPassword();
     	assertTrue( passwordEncoder.matches("123456789", testUserEncryptedPassword) );
-    	
+
     	// Delete test user so that he does not interfere with other tests
     	userRepository.delete(testUser);
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void changePasswordMethodShouldReturnBadRequestStatusCodeBecauseOfMismatchingPassword() throws Exception {
     	// Insert test user with the logged in mock user's data
     	String encodedPassword = passwordEncoder.encode("123456");
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			/*
-	    			NOTE: Passwords are stored encrypted in the database 
-	    			and when attempting to update a user's password via the UserService, 
+	    			NOTE: Passwords are stored encrypted in the database
+	    			and when attempting to update a user's password via the UserService,
 	    			the service compares the passed old password to its encoded equivalent.
 	    			That's why we need the test user's password to be encoded.
     			*/
     			encodedPassword,
-    			encodedPassword, 
-    			"Ivan", 
+    			encodedPassword,
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	// Test if the response code is 400 BAD REQUEST
-        MvcResult result = this.mockMvc.perform( 
+        MvcResult result = this.mockMvc.perform(
         	post("/profile/change-password")
         		.param("oldPassword", "123456")
         		.param("newPassword", "12345678")
@@ -196,47 +202,50 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isBadRequest() )
         	.andReturn();
-        
+
         // Test if the response string is an error message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("New passwords don't match!");
-    	
+
     	// Test if the user's info has been updated
     	Long testUserId = testUser.getId();
     	String testUserEncryptedPassword = userRepository.findById(testUserId).get().getPassword();
     	assertTrue( passwordEncoder.matches("123456", testUserEncryptedPassword) );
-    	
+
     	// Delete test user so that he does not interfere with other tests
     	userRepository.delete(testUser);
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void changePasswordMethodShouldReturnBadRequestStatusCodeBecauseOfInvalidNewPassword() throws Exception {
     	// Insert test user with the logged in mock user's data
     	String encodedPassword = passwordEncoder.encode("123456");
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			/*
-	    			NOTE: Passwords are stored encrypted in the database 
-	    			and when attempting to update a user's password via the UserService, 
+	    			NOTE: Passwords are stored encrypted in the database
+	    			and when attempting to update a user's password via the UserService,
 	    			the service compares the passed old password to its encoded equivalent.
 	    			That's why we need the test user's password to be encoded.
     			*/
     			encodedPassword,
-    			encodedPassword, 
-    			"Ivan", 
+    			encodedPassword,
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	// Test if the response code is 400 BAD REQUEST
-        MvcResult result = this.mockMvc.perform( 
+        MvcResult result = this.mockMvc.perform(
         	post("/profile/change-password")
         		.param("oldPassword", "123456")
         		.param("newPassword", "123") // invalid new password
@@ -244,25 +253,25 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isBadRequest() )
         	.andReturn();
-        
+
         // Test if the response string is an error message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("Invalid new password!");
-    	
+
     	// Test if the user's info has been updated
     	Long testUserId = testUser.getId();
     	String testUserEncryptedPassword = userRepository.findById(testUserId).get().getPassword();
     	assertTrue( passwordEncoder.matches("123456", testUserEncryptedPassword) );
-    	
+
     	// Delete test user so that he does not interfere with other tests
     	userRepository.delete(testUser);
     }
-    
+
     /**
      * getUserData() tests
      * (GET "/profile/get-data")
      */
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER")
@@ -271,36 +280,39 @@ public class UserPlatformControllerTests {
         	.perform( get("/profile/get-data") )
         	.andExpect( status().isNotFound() )
         	.andReturn();
-        
+
         // Test if the response string is an error message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("User with this e-mail does not exist!");
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void getUserDataMethodShouldReturnOKStatusCode() throws Exception {
     	// Insert test user with the logged in mock user's data
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			"123456",
     			"123456",
-    			"Ivan", 
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	// Test if the response code is 200 OK
         MvcResult result = this.mockMvc
         	.perform( get("/profile/get-data") )
         	.andExpect( status().isOk() )
         	.andReturn();
-        
+
         // Test if the response string is the expected JSON object
     	String resultString = result.getResponse().getContentAsString();
     	JSONObject output = new JSONObject(resultString);
@@ -310,7 +322,7 @@ public class UserPlatformControllerTests {
     	assertTrue( output.get("firstName").equals("Ivan") );
     	assertTrue( output.get("lastName").equals("Ivanov") );
     	assertTrue( output.get("type").equals("USER") );
-    	
+
     	// Test if the user's info matches the output
     	Long testUserId = testUser.getId();
     	UserEntity retrievedTestUser = userRepository.findById(testUserId).get();
@@ -320,16 +332,16 @@ public class UserPlatformControllerTests {
     	assertTrue( retrievedTestUser.getFirstName().equals(output.get("firstName")) );
     	assertTrue( retrievedTestUser.getLastName().equals(output.get("lastName")) );
     	assertTrue( retrievedTestUser.getType() == UserType.USER );
-    	
+
     	// Delete test user so that he does not interfere with other tests
     	userRepository.delete(testUser);
     }
-    
+
 	/**
 	* updateUserData() tests
 	* (PUT "/profile/edit-data")
 	*/
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
@@ -342,9 +354,9 @@ public class UserPlatformControllerTests {
     	postRequestBody.put("lastName", "Ivanov");
     	postRequestBody.put("birthday", "1969-01-01");
     	postRequestBody.put("type", "USER");
-    	
+
         MvcResult result = this.mockMvc
-        	.perform( 
+        	.perform(
         		put("/profile/edit-data")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content( postRequestBody.toString()
@@ -352,30 +364,33 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isNotFound() )
         	.andReturn();
-        
+
         // Test if the response string is an error message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("User with this e-mail does not exist!");
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void updateUserDataMethodShouldReturnOKStatusCode() throws Exception {
     	// Insert test user with the logged in mock user's data
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			"123456",
     			"123456",
-    			"Ivan", 
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	JSONObject postRequestBody = new JSONObject();
     	postRequestBody.put("email", "test_updated@ipb.com");
     	postRequestBody.put("password", "1234567");
@@ -384,9 +399,9 @@ public class UserPlatformControllerTests {
     	postRequestBody.put("lastName", "Petrov");
     	postRequestBody.put("birthday", "1969-01-01");
     	postRequestBody.put("type", "USER");
-    	
+
         MvcResult result = this.mockMvc
-        	.perform( 
+        	.perform(
         		put("/profile/edit-data")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content( postRequestBody.toString()
@@ -394,11 +409,11 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isOk() )
         	.andReturn();
-        
+
         // Test if the response string is a success message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("Successfully updated user!");
-    	
+
     	// Test if the user's info has been updated
     	Long testUserId = testUser.getId();
     	UserEntity retrievedTestUser = userRepository.findById(testUserId).get();
@@ -408,29 +423,32 @@ public class UserPlatformControllerTests {
     	assertTrue( retrievedTestUser.getFirstName().equals("Petar") );
     	assertTrue( retrievedTestUser.getLastName().equals("Petrov") );
     	assertTrue( retrievedTestUser.getType() == UserType.USER );
-    	
+
     	// Delete test user so that he does not interfere with other tests
     	userRepository.delete(testUser);
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void updateUserDataMethodShouldReturnBadRequestStatusCodeBecauseOfBindingResultErrors() throws Exception {
     	// Insert test user with the logged in mock user's data
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			"123456",
     			"123456",
-    			"Ivan", 
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	JSONObject postRequestBody = new JSONObject();
     	postRequestBody.put("email", "my-email"); // invalid e-mail
     	postRequestBody.put("password", "123"); // invalid password
@@ -439,9 +457,9 @@ public class UserPlatformControllerTests {
     	postRequestBody.put("lastName", "Petrov");
     	postRequestBody.put("birthday", "1969-01-01");
     	postRequestBody.put("type", "USER");
-    	
+
         MvcResult result = this.mockMvc
-        	.perform( 
+        	.perform(
         		put("/profile/edit-data")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content( postRequestBody.toString()
@@ -449,13 +467,13 @@ public class UserPlatformControllerTests {
         	)
         	.andExpect( status().isBadRequest() )
         	.andReturn();
-        
+
         // Test if the response string is a success message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("Invalid e-mail!");
     	assertThat(resultString).contains("User password must be at least 6 characters!");
     	assertThat(resultString).contains("Passwords don't match!");
-    	
+
     	// Test if the user's info has been updated
     	Long testUserId = testUser.getId();
     	UserEntity retrievedTestUser = userRepository.findById(testUserId).get();
@@ -474,7 +492,7 @@ public class UserPlatformControllerTests {
 	* deleteUser() tests
 	* (DELETE "/profile")
 	*/
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER")
@@ -483,40 +501,43 @@ public class UserPlatformControllerTests {
         	.perform( delete("/profile") )
         	.andExpect( status().isNotFound() )
         	.andReturn();
-        
+
         // Test if the response string is an error message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("User with this e-mail does not exist!");
     }
-    
+
     @Test
     @Transactional
     @WithMockUser(roles = "USER", username="test@ipb.com")
     public void deleteUserMethodShouldReturnOKStatusCode() throws Exception {
     	// Insert test user with the logged in mock user's data
-    	UserEntity testUser = userRepository.save( 
+    	UserEntity testUser = userRepository.save(
     		new UserEntity(
     			null, // id is auto-generated
     			"test@ipb.com", // must match username in @WithMockUser annotation
     			"123456",
     			"123456",
-    			"Ivan", 
+    			"Ivan",
     			"Ivanov",
-    			new java.sql.Date(0), 
-    			UserType.USER
+    			new java.sql.Date(0),
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
-    	
+
     	// Test if the response code is 200 OK
         MvcResult result = this.mockMvc
         	.perform( delete("/profile") )
         	.andExpect( status().isOk() )
         	.andReturn();
-        
+
         // Test if the response string is a success message
     	String resultString = result.getResponse().getContentAsString();
     	assertThat(resultString).contains("Successfully deleted user!");
-    	
+
     	// Test if the user has been deleted and perform delete operation just in case
     	Long testUserId = testUser.getId();
     	assertTrue( !userRepository.existsById(testUserId) );

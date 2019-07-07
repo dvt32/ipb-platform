@@ -142,7 +142,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -279,7 +282,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -383,7 +389,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -430,7 +439,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -478,7 +490,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -565,7 +580,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -633,7 +651,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -701,7 +722,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.ADMIN
+    			UserType.ADMIN,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -769,7 +793,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.ADMIN
+    			UserType.ADMIN,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -818,7 +845,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -856,7 +886,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -912,7 +945,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -948,7 +984,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -999,7 +1038,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	
@@ -1050,7 +1092,10 @@ public class UserControllerTests {
     			"Ivan", 
     			"Ivanov",
     			new java.sql.Date(0), 
-    			UserType.USER
+    			UserType.USER,
+					null,
+					null,
+					null
     		)
     	);
     	

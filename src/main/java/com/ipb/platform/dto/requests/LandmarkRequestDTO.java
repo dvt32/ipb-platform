@@ -1,6 +1,5 @@
 package com.ipb.platform.dto.requests;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +18,7 @@ public class LandmarkRequestDTO extends ObjectRequestDTO{
 	
 	private boolean inTop100;
 	
-	private List<Date> datesNotWorking;
+	private List<DatesNotWorkingRequestDTO> datesNotWorking;
+
+	private String workTime;
 }

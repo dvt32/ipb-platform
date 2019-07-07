@@ -1,5 +1,8 @@
 package com.ipb.platform.mappers.impl;
 
+import com.ipb.platform.dto.responses.CategoryResponseDTO;
+import com.ipb.platform.mappers.CategoryMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ipb.platform.dto.requests.UserRequestDTO;
@@ -8,6 +11,9 @@ import com.ipb.platform.mappers.UserMapper;
 import com.ipb.platform.persistence.entities.UserEntity;
 
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class implements the user mapper interface. 
@@ -20,7 +26,9 @@ import lombok.NoArgsConstructor;
 public class UserMapperImpl 
 	implements UserMapper 
 {
-	
+	@Autowired
+	private CategoryMapping categoryMapper;
+
 	@Override
 	public UserEntity toEntity(UserRequestDTO userRequestDTO) {
 		UserEntity entity = new UserEntity(); 
@@ -33,7 +41,7 @@ public class UserMapperImpl
 		entity.setLastName( userRequestDTO.getLastName() );
 		entity.setBirthday( userRequestDTO.getBirthday() );
 		entity.setType( userRequestDTO.getType() );
-		
+
 		return entity;
 	}
 
@@ -49,7 +57,14 @@ public class UserMapperImpl
 		dto.setLastName( userEntity.getLastName() );
 		dto.setBirthday( userEntity.getBirthday() );
 		dto.setType( userEntity.getType() );
-		
+
+		if(userEntity.getCategories() != null) {
+			List<CategoryResponseDTO> categories = userEntity.getCategories().stream()
+					.map(catEntity -> this.categoryMapper.toDTO(catEntity))
+					.collect(Collectors.toList());
+
+			dto.setCategories(categories);
+		}
 		return dto;
 	}
 

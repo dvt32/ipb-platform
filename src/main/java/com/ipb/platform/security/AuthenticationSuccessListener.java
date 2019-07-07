@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
  * @author dvt32
  */
 @Component
-public class AuthenticationSuccessListener 
-  implements ApplicationListener<AuthenticationSuccessEvent> 
-{
+public class AuthenticationSuccessListener implements ApplicationListener<AuthenticationSuccessEvent> {
+
 	@Autowired
     private LoginAttemptService loginAttemptService;
 	

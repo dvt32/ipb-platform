@@ -39,5 +39,13 @@ public class CategoryEntity {
 	     mappedBy = "categories"
 	)
 	private List<ObjectEntity> objects;
-	
+
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE
+			},
+			mappedBy = "categories"
+	)
+	private List<UserEntity> users;
 }

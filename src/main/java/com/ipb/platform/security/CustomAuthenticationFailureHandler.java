@@ -22,9 +22,8 @@ import org.springframework.stereotype.Component;
  * @author dvt32
  */
 @Component
-public class CustomAuthenticationFailureHandler 
-  implements AuthenticationFailureHandler 
-{
+public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
 	@Autowired
 	LoginAttemptService loginService;
 

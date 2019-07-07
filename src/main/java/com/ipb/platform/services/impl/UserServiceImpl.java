@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.ipb.platform.persistence.entities.CategoryEntity;
+import com.ipb.platform.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
@@ -56,7 +58,10 @@ public class UserServiceImpl
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
+	@Autowired
+	private CategoryService categoryService;
+
 	/**
 	 * Creates a new user from a request DTO, which contains the user's data.
 	 */
@@ -76,10 +81,11 @@ public class UserServiceImpl
 		userRequestDTO.setMatchingPassword(encodedUserPassword);
 			
 		UserEntity userEntity = userMapper.toEntity(userRequestDTO);
+		this.setCategories(userRequestDTO, userEntity);
 		userEntity = userRepository.save(userEntity);
 		return userEntity.getId();
 	}
-	
+
 	/**
 	 * Updates an existing user with a specified ID.
 	 */
@@ -101,9 +107,24 @@ public class UserServiceImpl
 		userRequestDTO.setMatchingPassword(encodedUserPassword);
 		
 		UserEntity userEntity = userMapper.toEntity(userRequestDTO);
+		this.setCategories(userRequestDTO, userEntity);
 		userRepository.save(userEntity);
 	}
-	
+
+	private void setCategories(UserRequestDTO user, UserEntity entity) {
+		if (user.getCategories() != null) {
+			List<CategoryEntity> categoriesEntities = this.getCategoriesList(user.getCategories());
+			entity.setCategories(categoriesEntities);
+		}
+	}
+
+	private List<CategoryEntity> getCategoriesList(List<Long> categoriesId) {
+		return categoriesId
+				.stream()
+				.map(catId -> this.categoryService.findCategoryEntityById(catId))
+				.collect(Collectors.toList());
+	}
+
 	/**
 	 * Updates an existing user with a specified e-mail.
 	 */
@@ -231,7 +252,8 @@ public class UserServiceImpl
 	 * @return true if there is a user with such an e-mail address, false otherwise
 	 */
 	private boolean emailExists(String email) {
-		return userRepository.existsByEmail(email);
+		Optional<UserEntity> userWithThisEmail = userRepository.findByEmail(email);
+		return userWithThisEmail.isPresent();
     }
 	
 	/**
@@ -241,7 +263,8 @@ public class UserServiceImpl
 	 * @return true if there is a user with such an id, false otherwise
 	 */
 	private boolean userExists(Long id) {
-		return userRepository.existsById(id);
+		Optional<UserEntity> userWithThisId = userRepository.findById(id);
+		return userWithThisId.isPresent();
     }
 
 	/**
@@ -265,13 +288,16 @@ public class UserServiceImpl
 		createPasswordResetTokenForUser(user, resetToken);
 		
 		String appUrl = environment.getProperty("ipb.platform.url");
-		
+
+		String newPassword = "IPB-" + resetToken +"!";
+		this.changePasswordByToken(resetToken,newPassword);
+
 		SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 		passwordResetEmail.setTo(userEmailAddress);
 		passwordResetEmail.setSubject("IPB Password Reset Request");
 		passwordResetEmail.setText(
-			"To reset your password, click the link below: \n" 
-			+ appUrl + "/users/reset-password?token=" + resetToken
+			"This is NEW PASSWORD for '" + appUrl + "' \n"
+				+ newPassword
 		);
 		
 		mailSender.send(passwordResetEmail);
@@ -305,9 +331,15 @@ public class UserServiceImpl
 	 * @param newPassword The user's desired new password.
 	 */
 	@Override
-	public void changePasswordByToken(String token, String newPassword) {
+	public void changePasswordByToken(String token, String newPassword)
+		throws UserNotFoundException
+	{
 		PasswordResetToken resetToken = tokenRepository.findByToken(token);
 		UserEntity user = resetToken.getUser();
+
+		if (user == null || !userExists(user.getId()) ) {
+			throw new UserNotFoundException("User for this reset token is null or does not exist in database!");
+		}
 		
 		String newEncodedPassword = passwordEncoder.encode(newPassword);
 		user.setPassword(newEncodedPassword);

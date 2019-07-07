@@ -21,8 +21,10 @@ public class ObjectRequestDTO {
 	private double longitude;
 	
 	private String type;
+
+	private boolean isApproved;
 	
 	private List<ImageRequestDTO> images;
 	
-	private List<Long> categoriesID;
+	private List<Long> categories;
 }

@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
  * @author dvt32
  */
 @Component
-public class AuthenticationFailureListener 
-  implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> 
-{
+public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
+
 	@Autowired
     private LoginAttemptService loginAttemptService;
 	

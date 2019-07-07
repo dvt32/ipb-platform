@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.Getter;
@@ -19,8 +18,9 @@ import lombok.Setter;
 public class CityEntity extends ObjectEntity{
 
 	@OneToMany(mappedBy = "city")
-    private List<LandmarkEntity> landmark;
+    private List<LandmarkEntity> landmarks;
 	
-	@OneToOne(mappedBy = "city")
-    private EventEntity event;
+	@OneToMany(mappedBy = "city")
+    private List<EventEntity> events;
+
 }

@@ -1,9 +1,6 @@
 package com.ipb.platform.persistence.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +12,8 @@ import lombok.Setter;
 @Entity(name = "events")
 public class EventEntity extends ObjectEntity {
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+//	@ManyToOne()
 	@JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
 	private CityEntity city;
 	
@@ -24,4 +22,7 @@ public class EventEntity extends ObjectEntity {
 	
 	@JoinColumn(name = "end_date",  nullable = false)
 	private long endDate;
+
+	@JoinColumn(name = "work_time",  nullable = false)
+	private String workTime;
 }

@@ -26,8 +26,7 @@ import org.springframework.util.StringUtils;
  * @author dvt32
  */
 @Component
-public class CustomAuthenticationSuccessHandler 
-  extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	
 	private RequestCache requestCache = new HttpSessionRequestCache();
 	
@@ -35,13 +34,8 @@ public class CustomAuthenticationSuccessHandler
 	LoginAttemptService loginService;
  
 	@Override
-    public void onAuthenticationSuccess(
-      HttpServletRequest request,
-      HttpServletResponse response, 
-      Authentication authentication
-    ) 
-      throws ServletException, IOException 
-    {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication
+			authentication) throws ServletException, IOException {
     	String ip = getClientIP(request);
 
     	if (loginService.isBlocked(ip)) {

@@ -23,6 +23,8 @@ public class ObjectResponseDTO {
 	private double longitude;
 	
 	private String type;
+
+	private boolean isApproved;
 	
 	private List<ImageResponseDTO> images;
 	

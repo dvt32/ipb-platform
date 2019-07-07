@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * An instance of this class is sent back to the user controller
  * after the user service is done manipulating the user request DTO
@@ -28,5 +30,7 @@ public class UserResponseDTO {
 	private String lastName;
 	private java.sql.Date birthday;
 	private UserType type;
+
+	private List<CategoryResponseDTO> categories;
 	
 }

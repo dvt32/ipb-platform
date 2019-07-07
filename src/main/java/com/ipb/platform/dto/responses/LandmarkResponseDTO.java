@@ -1,6 +1,5 @@
 package com.ipb.platform.dto.responses;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +18,7 @@ public class LandmarkResponseDTO extends ObjectResponseDTO{
 	
 	private boolean inTop100;
 	
-	private List<Date> datesNotWorking;
+	private List<DatesNotWorkingResponseDTO> datesNotWorking;
+
+	private String workTime;
 }

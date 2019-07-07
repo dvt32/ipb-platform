@@ -19,8 +19,6 @@ import org.springframework.security.config.annotation.method.configuration.Globa
   prePostEnabled = true, // enables Spring Security pre/post annotations
   securedEnabled = true, // determines if the @Secured annotation should be enabled
   jsr250Enabled = true) // allows us to use the @RoleAllowed annotation
-public class MethodSecurityConfig 
-  extends GlobalMethodSecurityConfiguration 
-{
+public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 	
 }
