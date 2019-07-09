@@ -58,3 +58,14 @@ c) Update user data: HTTP PUT request to http://localhost:8190/profile/edit-data
 
 d) Delete user data: HTTP DELETE request to http://localhost:8190/profile (logs out user and deletes him)
 
+---
+
+5. Forgot / Reset password
+
+a) HTTP POST request http://localhost:8190/users/forgot-password with request param "email" (the user's email) (Example: http://localhost:8190/users/forgot-password?email=test@test.com)
+
+b) Then an e-mail is sent to the specified address with a password reset link (if such a user exists). 
+Use that link and send a POST request to with an added request param "newPassword" and "matchingNewPassword" to the URL. 
+
+(Example: http://localhost:8190/users/reset-password?token=7a6761ac-453e-451a-ab5e-8cda55f84ee3&newPassword=1234567&matchingNewPassword=1234567)
+
