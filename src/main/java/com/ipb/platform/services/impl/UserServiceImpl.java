@@ -2,10 +2,14 @@ package com.ipb.platform.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,8 @@ import com.ipb.platform.mappers.UserMapper;
 import com.ipb.platform.persistence.UserRepository;
 import com.ipb.platform.persistence.entities.UserEntity;
 import com.ipb.platform.persistence.entities.UserType;
+import com.ipb.platform.security.PasswordResetToken;
+import com.ipb.platform.security.PasswordResetTokenRepository;
 import com.ipb.platform.services.UserService;
 import com.ipb.platform.validation.EmailExistsException;
 import com.ipb.platform.validation.UserNotFoundException;
@@ -41,6 +47,12 @@ public class UserServiceImpl
 	
 	@Autowired
 	private Environment environment;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	@Autowired
+	private PasswordResetTokenRepository tokenRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -233,6 +245,86 @@ public class UserServiceImpl
 		Optional<UserEntity> userWithThisId = userRepository.findById(id);
 		return userWithThisId.isPresent();
     }
+
+	/**
+	 * Creates a random UUID string which serves as a password reset token and sends an e-mail
+	 * with a password reset link, containing that reset token.
+	 * 
+	 * The link's URL is retrieved from a property defined in the application.properties file.
+	 * 
+	 * The method has an @Async annotation because sending the e-mail is an asynchronous operation.
+	 */
+	@Async
+	public void createResetPasswordTokenAndSendEmail(String userEmailAddress) 
+		throws UserNotFoundException 
+	{
+		if ( !emailExists(userEmailAddress) ) {
+			throw new UserNotFoundException("User with this e-mail address does not exist!");
+		}
+		
+		String resetToken = UUID.randomUUID().toString();
+		UserEntity user = userRepository.findByEmail(userEmailAddress).get();
+		createPasswordResetTokenForUser(user, resetToken);
+		
+		String appUrl = environment.getProperty("ipb.platform.url");
+		
+		SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
+		passwordResetEmail.setTo(userEmailAddress);
+		passwordResetEmail.setSubject("IPB Password Reset Request");
+		passwordResetEmail.setText(
+			"To reset your password, click the link below: \n" 
+			+ appUrl + "/users/reset-password?token=" + resetToken
+		);
+		
+		mailSender.send(passwordResetEmail);
+	}
+
+	/**
+	 * Creates a password reset token object 
+	 * from a specified token string (UUID string) 
+	 * and an existing user.
+	 */
+	@Override
+	public PasswordResetToken createPasswordResetTokenForUser(UserEntity user, String token) {
+		PasswordResetToken myToken = new PasswordResetToken();
+		myToken.setUser(user);
+		myToken.setToken(token);
+	    return tokenRepository.save(myToken);
+	}
+
+	/**
+	 * Checks if there's an existing token with a specified token string.
+	 */
+	@Override
+	public boolean isValidPasswordResetToken(String token) {
+		return tokenRepository.existsByToken(token);
+	}
+
+	/**
+	 * Changes the password of an existing user with a valid password reset token.
+	 * 
+	 * @param token A token string
+	 * @param newPassword The user's desired new password.
+	 */
+	@Override
+	public void changePasswordByToken(String token, String newPassword) 
+		throws UserNotFoundException 
+	{
+		PasswordResetToken resetToken = tokenRepository.findByToken(token);
+		UserEntity user = resetToken.getUser();
+
+		if (user == null || !userExists(user.getId()) ) {
+			throw new UserNotFoundException("User for this reset token is null or does not exist in database!");
+		}
+		
+		String newEncodedPassword = passwordEncoder.encode(newPassword);
+		user.setPassword(newEncodedPassword);
+		user.setMatchingPassword(newEncodedPassword);
+		userRepository.save(user);
+		
+		// Remove token after it has been used
+		tokenRepository.delete(resetToken);
+	}
 
 	/**
 	 * Changes a user's privileges by passing in the user's e-mail and his new role.
