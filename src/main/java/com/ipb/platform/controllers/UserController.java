@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,6 +53,7 @@ public class UserController {
 	 * @return the list of users (empty if no users available)
 	 */
 	@GetMapping
+	@Secured("ROLE_ADMIN")
 	public List<UserResponseDTO> getAll() {
 		return userService.getAll();
 	}
@@ -63,6 +65,7 @@ public class UserController {
 	 * @return a ResponseEntity containing the user's data and an appropriate response code
 	 */
 	@GetMapping("/{id}")
+	@Secured({"ROLE_ADMIN"})
 	public ResponseEntity<?> getUserById(@PathVariable Long id) {
 		UserResponseDTO user = null;
 		
@@ -116,6 +119,7 @@ public class UserController {
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PutMapping("/{id}")
+	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> updateUserById(
 		@PathVariable Long id, 
 		@RequestBody @Valid UserRequestDTO user, 
@@ -143,6 +147,7 @@ public class UserController {
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@DeleteMapping("/{id}")
+	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> deleteUserById(@PathVariable Long id) 
 	{
 		try {
@@ -171,7 +176,7 @@ public class UserController {
 		
 		return responseErrorMessage;
 	}
-	
+
 	/**
 	 * Gives a user admin privileges by passing in the user's e-mail.
 	 * 
@@ -179,6 +184,7 @@ public class UserController {
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping(value="/make-user-admin", params="email")
+	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> makeUserAdminByEmail(@RequestParam("email") String userEmailAddress) 
 	{	
 		try {
@@ -197,6 +203,7 @@ public class UserController {
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping(value="/make-user-admin", params="id")
+	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> makeUserAdminById(@RequestParam("id") Long userId) 
 	{	
 		try {
@@ -215,6 +222,7 @@ public class UserController {
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping(value="/make-user-non-admin", params="email")
+	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> makeUserNonAdminByEmail(@RequestParam("email") String userEmailAddress) {
 		try {
 			userService.setUserRoleByEmail(userEmailAddress, UserType.USER);
@@ -232,6 +240,7 @@ public class UserController {
 	 * @return a ResponseEntity object with either a success or an error message.
 	 */
 	@PostMapping(value="/make-user-non-admin", params="id")
+	@Secured("ROLE_ADMIN")
 	public ResponseEntity<String> makeUserNonAdminById(@RequestParam("id") Long userId) 
 	{	
 		try {
