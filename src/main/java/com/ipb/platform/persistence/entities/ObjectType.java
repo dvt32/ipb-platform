@@ -1,4 +1,4 @@
-package com.ipb.platform.persistance.entities;
+package com.ipb.platform.persistence.entities;
 
 public enum ObjectType {
 	LANDMARK("LANDMARK"), EVENT("EVENT"), CITY("CITY"), VILLAGE("VILLAGE");

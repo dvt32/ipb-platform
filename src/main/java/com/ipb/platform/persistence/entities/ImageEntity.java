@@ -1,4 +1,4 @@
-package com.ipb.platform.persistance.entities;
+package com.ipb.platform.persistence.entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

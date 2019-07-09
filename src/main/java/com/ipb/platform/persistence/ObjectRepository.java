@@ -1,7 +1,8 @@
-package com.ipb.platform.persistance;
+package com.ipb.platform.persistence;
 
-import com.ipb.platform.persistance.entities.ObjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ipb.platform.persistence.entities.ObjectEntity;
 
 public interface ObjectRepository extends JpaRepository<ObjectEntity, Long> {
 

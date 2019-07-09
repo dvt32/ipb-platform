@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import com.ipb.platform.dto.requests.CategoryRequestDTO;
 import com.ipb.platform.dto.responses.CategoryResponseDTO;
 import com.ipb.platform.mappers.CategoryMapper;
-import com.ipb.platform.persistance.entities.CategoryEntity;
-import com.ipb.platform.persistance.entities.ObjectEntity;
-import com.ipb.platform.persistance.entities.ObjectType;
+import com.ipb.platform.persistence.entities.CategoryEntity;
+import com.ipb.platform.persistence.entities.ObjectEntity;
+import com.ipb.platform.persistence.entities.ObjectType;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

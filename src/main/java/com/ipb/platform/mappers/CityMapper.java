@@ -2,7 +2,7 @@ package com.ipb.platform.mappers;
 
 import com.ipb.platform.dto.requests.CityRequestDTO;
 import com.ipb.platform.dto.responses.CityResponseDTO;
-import com.ipb.platform.persistance.entities.CityEntity;
+import com.ipb.platform.persistence.entities.CityEntity;
 
 public interface CityMapper{
 	

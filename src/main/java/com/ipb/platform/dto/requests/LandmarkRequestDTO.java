@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.JoinColumn;
 
-import com.ipb.platform.persistance.entities.ObjectType;
+import com.ipb.platform.persistence.entities.ObjectType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
