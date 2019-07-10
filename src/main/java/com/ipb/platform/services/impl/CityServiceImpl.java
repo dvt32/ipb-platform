@@ -9,10 +9,10 @@ import com.ipb.platform.dto.requests.CityRequestDTO;
 import com.ipb.platform.dto.responses.CityResponseDTO;
 import com.ipb.platform.mappers.CityMapper;
 import com.ipb.platform.mappers.ObjectMapper;
-import com.ipb.platform.persistance.CityRepository;
-import com.ipb.platform.persistance.ObjectRepository;
-import com.ipb.platform.persistance.entities.CityEntity;
-import com.ipb.platform.persistance.entities.ObjectEntity;
+import com.ipb.platform.persistence.CityRepository;
+import com.ipb.platform.persistence.ObjectRepository;
+import com.ipb.platform.persistence.entities.CityEntity;
+import com.ipb.platform.persistence.entities.ObjectEntity;
 import com.ipb.platform.services.CityService;
 import com.ipb.platform.services.ImageService;
 

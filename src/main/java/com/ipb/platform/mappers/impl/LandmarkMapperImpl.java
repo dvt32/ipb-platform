@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.ipb.platform.dto.requests.LandmarkRequestDTO;
 import com.ipb.platform.dto.responses.LandmarkResponseDTO;
 import com.ipb.platform.mappers.LandmarkMapper;
-import com.ipb.platform.persistance.entities.LandmarkEntity;
-import com.ipb.platform.persistance.entities.ObjectType;
+import com.ipb.platform.persistence.entities.LandmarkEntity;
+import com.ipb.platform.persistence.entities.ObjectType;
 
 import lombok.NoArgsConstructor;
 

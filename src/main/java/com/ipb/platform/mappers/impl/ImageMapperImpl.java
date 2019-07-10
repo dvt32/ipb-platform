@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ipb.platform.dto.requests.ImageRequestDTO;
 import com.ipb.platform.dto.responses.ImageResponseDTO;
 import com.ipb.platform.mappers.ImageMapper;
-import com.ipb.platform.persistance.entities.ImageEntity;
+import com.ipb.platform.persistence.entities.ImageEntity;
 
 import lombok.NoArgsConstructor;
 

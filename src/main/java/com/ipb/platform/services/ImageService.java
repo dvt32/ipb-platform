@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ipb.platform.dto.requests.ImageRequestDTO;
 import com.ipb.platform.dto.responses.ImageResponseDTO;
-import com.ipb.platform.persistance.entities.ObjectEntity;
+import com.ipb.platform.persistence.entities.ObjectEntity;
 
 public interface ImageService {
 	
