@@ -8,17 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.ipb.platform.dto.requests.ObjectRequestDTO;
 import com.ipb.platform.dto.responses.ObjectResponseDTO;
-import com.ipb.platform.mappers.ImageMapper;
 import com.ipb.platform.mappers.ObjectMapper;
 import com.ipb.platform.persistence.CategoryRepository;
-import com.ipb.platform.persistence.ImageRepository;
 import com.ipb.platform.persistence.ObjectRepository;
 import com.ipb.platform.persistence.entities.CategoryEntity;
-import com.ipb.platform.persistence.entities.CityEntity;
-import com.ipb.platform.persistence.entities.ImageEntity;
 import com.ipb.platform.persistence.entities.ObjectEntity;
 import com.ipb.platform.persistence.entities.ObjectType;
-import com.ipb.platform.services.CategoryService;
 import com.ipb.platform.services.ImageService;
 import com.ipb.platform.services.ObjectService;
 

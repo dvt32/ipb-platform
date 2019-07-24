@@ -2,8 +2,6 @@ package com.ipb.platform.dto.responses;
 
 import java.util.List;
 
-import com.ipb.platform.persistence.entities.ObjectType;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

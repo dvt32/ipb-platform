@@ -7,24 +7,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.ipb.platform.dto.requests.EventRequestDTO;
-import com.ipb.platform.dto.requests.LandmarkRequestDTO;
 import com.ipb.platform.dto.responses.EventResponseDTO;
-import com.ipb.platform.dto.responses.LandmarkResponseDTO;
 import com.ipb.platform.mappers.EventMapper;
-import com.ipb.platform.mappers.ImageMapper;
-import com.ipb.platform.mappers.LandmarkMapper;
 import com.ipb.platform.persistence.CityRepository;
 import com.ipb.platform.persistence.EventRepository;
-import com.ipb.platform.persistence.ImageRepository;
-import com.ipb.platform.persistence.LandmarkRepository;
 import com.ipb.platform.persistence.entities.CityEntity;
 import com.ipb.platform.persistence.entities.EventEntity;
-import com.ipb.platform.persistence.entities.ImageEntity;
-import com.ipb.platform.persistence.entities.LandmarkEntity;
 import com.ipb.platform.persistence.entities.ObjectEntity;
 import com.ipb.platform.services.EventService;
 import com.ipb.platform.services.ImageService;
-import com.ipb.platform.services.LandmarkService;
 
 import lombok.AllArgsConstructor;
 

@@ -6,10 +6,8 @@ import com.ipb.platform.dto.requests.CityRequestDTO;
 import com.ipb.platform.dto.responses.CityResponseDTO;
 import com.ipb.platform.mappers.CityMapper;
 import com.ipb.platform.persistence.entities.CityEntity;
-import com.ipb.platform.persistence.entities.ObjectEntity;
 import com.ipb.platform.persistence.entities.ObjectType;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Service
