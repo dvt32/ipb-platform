@@ -1,17 +1,35 @@
-# ipb-platform (MSE 2018 @ Uni-Ruse)
+# How to use REST services
 
-# How to get the app running
+1. Create / Read / Update / Delete user(s)
 
-NOTE: You need to have Oracle 18.3c installed.
+a) Create user: HTTP POST request to "http://localhost:8190/users". Example request body (JSON):
 
-1. Download "ojdbc8.jar" from here: 
+{
+    "email": "test@ipb.com",
+    "password": "123456",
+    "matchingPassword": "123456",
+    "firstName": "Ivan",
+    "lastName": "Ivanov",
+    "birthdayInMilliseconds": 123456789,
+    "type": "USER"
+}
 
-https://www.oracle.com/technetwork/database/application-development/jdbc/downloads/jdbc-ucp-183-5013470.html
+b) Read user(s): 
 
-2. Navigate to the folder where you downloaded the JAR (through cmd) and install via Maven with the following command:
+HTTP GET request to http://localhost:8190/users and http://localhost:8190/users/{userId}
 
-mvn install:install-file -Dfile=ojdbc8.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=18.3 -Dpackaging=jar
+c) Update user: 
 
-3. Replace the Oracle username/password in the project's "application.properties" with your own
+HTTP PUT request to http://localhost:8190/users/{userId} with updated user data request body (JSON)
 
-4. Run via Eclipse / Spring Tool Suite
+d) Delete user: 
+
+HTTP DELETE request to http://localhost:8190/users/{userId}
+
+README.md
+
+e) Change user privileges
+
+- User to Admin -> HTTP POST request to http://localhost:8190/users/make-user-admin with request param "email" OR "id" (email or ID of an existing user)
+
+- Admin to User -> HTTP POST request to http://localhost:8190/users/make-user-non-admin with request param "email" OR "id" (email or ID of an existing user)
