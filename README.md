@@ -57,4 +57,3 @@ b) Read user data: HTTP GET request to http://localhost:8190/profile/get-data (r
 c) Update user data: HTTP PUT request to http://localhost:8190/profile/edit-data with request body like shown above
 
 d) Delete user data: HTTP DELETE request to http://localhost:8190/profile (logs out user and deletes him)
-
