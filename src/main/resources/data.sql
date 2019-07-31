@@ -1,6 +1,6 @@
 -- Insert SYSADMIN
 
-INSERT INTO Users (id, email, password, matching_password, first_name, last_name, birthday_in_milliseconds, type)
+INSERT INTO Users (id, email, password, matching_password, first_name, last_name, birthday, type)
 VALUES (
 	10001,
 	'admin@ipb.com',
@@ -10,13 +10,13 @@ VALUES (
 	'$2a$10$n8rwMAHjSbmuI8M7ckPnNe6sp0.Vq3U2x12uHK9gExuax.geO1WCa', -- confirm password
 	'SYS',
 	'ADMIN',
-	123456789, 
+	parsedatetime('10-10-1995', 'dd-MM-yyyy'),
 	'ADMIN'
 );
 
 -- Insert test user
 
-INSERT INTO Users (id, email, password, matching_password, first_name, last_name, birthday_in_milliseconds, type)
+INSERT INTO Users (id, email, password, matching_password, first_name, last_name, birthday, type)
 VALUES (
 	10002,
 	'user@ipb.com',
@@ -26,6 +26,6 @@ VALUES (
 	'$2a$10$HsDw5/0ENEeQB2CMRsvEweumk3cPKwW9dl5UVqPxOANXCJ//sGJiS', -- confirm password
 	'Ivan',
 	'Ivanov',
-	123456789, 
+	parsedatetime('10-10-1996', 'dd-MM-yyyy'), 
 	'USER'
 );

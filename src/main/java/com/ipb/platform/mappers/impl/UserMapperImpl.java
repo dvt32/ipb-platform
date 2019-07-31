@@ -31,7 +31,7 @@ public class UserMapperImpl
 		entity.setMatchingPassword( userRequestDTO.getMatchingPassword() );
 		entity.setFirstName( userRequestDTO.getFirstName() );
 		entity.setLastName( userRequestDTO.getLastName() );
-		entity.setBirthdayInMilliseconds( userRequestDTO.getBirthdayInMilliseconds() );
+		entity.setBirthday( userRequestDTO.getBirthday() );
 		entity.setType( userRequestDTO.getType() );
 		
 		return entity;
@@ -47,7 +47,7 @@ public class UserMapperImpl
 		dto.setMatchingPassword( userEntity.getMatchingPassword() );
 		dto.setFirstName( userEntity.getFirstName() );
 		dto.setLastName( userEntity.getLastName() );
-		dto.setBirthdayInMilliseconds( userEntity.getBirthdayInMilliseconds() );
+		dto.setBirthday( userEntity.getBirthday() );
 		dto.setType( userEntity.getType() );
 		
 		return dto;
@@ -63,7 +63,7 @@ public class UserMapperImpl
 		dto.setMatchingPassword( userResponseDTO.getMatchingPassword() );
 		dto.setFirstName( userResponseDTO.getFirstName() );
 		dto.setLastName( userResponseDTO.getLastName() );
-		dto.setBirthdayInMilliseconds( userResponseDTO.getBirthdayInMilliseconds() );
+		dto.setBirthday( userResponseDTO.getBirthday() );
 		dto.setType( userResponseDTO.getType() );
 		
 		return dto;

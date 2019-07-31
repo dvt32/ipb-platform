@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * An instance of this class is used 
@@ -34,6 +35,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @PasswordMatches
 public class UserRequestDTO {
 	
@@ -62,7 +64,7 @@ public class UserRequestDTO {
 	private String lastName;
 	
 	@NotNull(message = "Birth date must not be be null!")
-	private Long birthdayInMilliseconds;
+    private java.sql.Date birthday;
 	
 	private UserType type;
 	

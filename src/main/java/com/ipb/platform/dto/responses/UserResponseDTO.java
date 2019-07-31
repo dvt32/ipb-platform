@@ -26,7 +26,7 @@ public class UserResponseDTO {
 	private String matchingPassword;
 	private String firstName;
 	private String lastName;
-	private Long birthdayInMilliseconds;
+	private java.sql.Date birthday;
 	private UserType type;
 	
 }

@@ -22,7 +22,7 @@ a) Create user: HTTP POST request to "http://localhost:8190/users". Example requ
     "matchingPassword": "123456",
     "firstName": "Ivan",
     "lastName": "Ivanov",
-    "birthdayInMilliseconds": 123456789,
+    "birthday": "1969-01-01",
     "type": "USER"
 }
 

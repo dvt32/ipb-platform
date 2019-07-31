@@ -68,7 +68,7 @@ public class UserServiceImpl
 		if ( emailExists(userEmail) ) {
 			throw new EmailExistsException("User with this e-mail address already exists!");
 		}
-
+		
 		// Make sure the password is stored encrypted in the database
 		String userPassword = userRequestDTO.getPassword();
 		String encodedUserPassword = passwordEncoder.encode(userPassword);
