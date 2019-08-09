@@ -68,4 +68,3 @@ b) Then an e-mail is sent to the specified address with a password reset link (i
 Use that link and send a POST request to with an added request param "newPassword" and "matchingNewPassword" to the URL. 
 
 (Example: http://localhost:8190/users/reset-password?token=7a6761ac-453e-451a-ab5e-8cda55f84ee3&newPassword=1234567&matchingNewPassword=1234567)
-
