@@ -3,6 +3,7 @@ package com.ipb.platform.persistence.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -20,11 +21,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="User_Form_Submissions")
+@Table(name="Contact_Form_Submissions")
 public class ContactFormSubmissionEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_form_submission_sequence")
 	private Long id;
 	
 	@NotBlank(message = "Sender e-mail must not be null or blank!")
