@@ -2,25 +2,13 @@ package com.ipb.platform.persistance.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.validation.constraints.Max;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
@@ -34,7 +22,11 @@ public class ObjectEntity {
 	private Long id;
 	
 	private String name;
-	
+
+//	@Length(max = 214748364 )
+//	@Column(columnDefinition="VARCHAR(2147483647)")
+//	postgres VARCHAR limit 10485760
+	@Column(columnDefinition="VARCHAR(10485760)")
 	private String description;
 	
 	private double latitude;
@@ -47,11 +39,11 @@ public class ObjectEntity {
 	@OneToMany(mappedBy = "object", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ImageEntity> images;
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE,
-            })
+	@ManyToMany(fetch = FetchType.LAZY)//,
+//            cascade = {
+//                CascadeType.PERSIST,
+//                CascadeType.MERGE,
+//            })
     @JoinTable(name = "object_categories",
             joinColumns = @JoinColumn(name = "object_id",  referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id",  referencedColumnName = "id"))

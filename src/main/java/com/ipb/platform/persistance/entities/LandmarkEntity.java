@@ -14,8 +14,9 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Entity(name = "landmarks")
 public class LandmarkEntity extends ObjectEntity {
-	
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+
+//	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToOne()
 	@JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
 	private CityEntity city;
 	

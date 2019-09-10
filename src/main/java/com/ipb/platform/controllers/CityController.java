@@ -42,7 +42,8 @@ public class CityController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "create", method = RequestMethod.POST)
+	@RequestMapping(value = "create", method = RequestMethod.POST,
+			consumes = "application/json", produces = "application/json")
 	public Long create(@RequestBody CityRequestDTO city) {
 		return this.service.save(city);
 	}

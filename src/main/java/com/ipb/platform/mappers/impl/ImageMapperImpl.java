@@ -26,8 +26,8 @@ public class ImageMapperImpl implements ImageMapping {
 
 		if (this.isCorrectURL(imgURL))
 			entity.setPath(imgURL);
-		else
-			throw new IllegalRequestArgumentException("Image path is not correct!!!");
+//		else
+//			throw new IllegalRequestArgumentException("Image path is not correct!!!");
 
 		String base64 =image.getBase64code();
 		
@@ -54,7 +54,7 @@ public class ImageMapperImpl implements ImageMapping {
 		if (imgUrl == "" || imgUrl == null)
 			return true;
 
-		String patternString = "^(http(s?)://).*\\.(?:jpg|jpeg|png)$";
+		String patternString = "^(http(s?)://).*\\.(?:jpg|jpeg|png|gif)$";
 
 		Pattern pattern = Pattern.compile(patternString);
 
