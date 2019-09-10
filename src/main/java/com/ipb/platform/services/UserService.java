@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.ipb.platform.dto.requests.UserRequestDTO;
 import com.ipb.platform.dto.responses.UserResponseDTO;
+import com.ipb.platform.persistence.entities.UserEntity;
 import com.ipb.platform.persistence.entities.UserType;
+import com.ipb.platform.security.PasswordResetToken;
 import com.ipb.platform.validation.EmailExistsException;
 import com.ipb.platform.validation.UserNotFoundException;
 
@@ -35,6 +37,14 @@ public interface UserService {
 	void changePassword(UserRequestDTO user, String newPassword);
 	
 	UserRequestDTO convertResponseDtoToRequestDto(UserResponseDTO userResponseDTO);
+	
+	void createResetPasswordTokenAndSendEmail(String emailAddress) throws UserNotFoundException;
+	
+	PasswordResetToken createPasswordResetTokenForUser(UserEntity user, String token);
+	
+	boolean isValidPasswordResetToken(String token);
+	
+	void changePasswordByToken(String token, String newPassword) throws UserNotFoundException;
 	
 	void setUserRoleByEmail(String userEmail, UserType role) throws UserNotFoundException;
 	

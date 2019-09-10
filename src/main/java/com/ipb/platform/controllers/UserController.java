@@ -176,7 +176,67 @@ public class UserController {
 		
 		return responseErrorMessage;
 	}
-
+	
+	/**
+	 * This method sends a password reset e-mail 
+	 * to a specified e-mail address (if there exists a user with that address).
+	 * The user service does the actual work (it generates a reset token and then sends an e-mail).
+	 * 
+	 * @param userEmailAddress The address of the user
+	 * @return a ResponseEntity object with either a success or an error message.
+	 */
+	@PostMapping(value = "/forgot-password")
+	public ResponseEntity<String> sendResetPasswordEmail(@RequestParam("email") String userEmailAddress) {	
+		try {
+			userService.createResetPasswordTokenAndSendEmail(userEmailAddress);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>("Successfully sent password reset e-mail to " + userEmailAddress, HttpStatus.OK);
+	}
+	
+	/**
+	 * This method is triggered 
+	 * after the user submits the reset password form 
+	 * on the front-end. 
+	 * 
+	 * It updates the user's password with a new one (the one entered in the form).
+	 * 
+	 * @param token The UUID token string from the reset password e-mail
+	 * @param newPassword The new password passed by the reset password form
+	 * @param matchingNewPassword A confirmation of the new password wanted by the user
+	 * 
+	 * @return a ResponseEntity object with either a success or an error message.
+	 */
+	@PostMapping("/reset-password")
+	public ResponseEntity<String> setNewPassword(
+		@RequestParam String token, 
+		@RequestParam String newPassword,
+		@RequestParam String matchingNewPassword) 
+	{
+		boolean isValidToken = userService.isValidPasswordResetToken(token);
+		if (!isValidToken) {
+			return new ResponseEntity<>("Invalid password reset link!", HttpStatus.BAD_REQUEST);
+		}
+		else {
+			if ( !(newPassword.equals(matchingNewPassword)) ) {
+				return new ResponseEntity<String>("New passwords don't match!", HttpStatus.BAD_REQUEST);
+			}
+			if ( !(userService.isValidPassword(newPassword)) ) {
+				return new ResponseEntity<String>("Invalid new password!", HttpStatus.BAD_REQUEST);
+			}
+			
+			try {
+				userService.changePasswordByToken(token, newPassword);
+			} catch (UserNotFoundException e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+		}
+		
+		return new ResponseEntity<>("Successfully changed user password via token!", HttpStatus.OK);
+	}
+	
 	/**
 	 * Gives a user admin privileges by passing in the user's e-mail.
 	 * 
