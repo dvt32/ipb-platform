@@ -15,9 +15,11 @@ import javax.validation.constraints.Size;
 import com.ipb.platform.validation.PasswordMatches;
 import com.ipb.platform.validation.ValidEmail;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * This class represents a "user" entity in the database.
@@ -27,8 +29,10 @@ import lombok.Setter;
  */
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table(name="Users")
 @PasswordMatches
 public class UserEntity {

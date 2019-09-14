@@ -178,6 +178,81 @@ public class UserController {
 	}
 	
 	/**
+	 * Gives a user admin privileges by passing in the user's e-mail.
+	 * 
+	 * @param userEmailAddress The target user's e-mail
+	 * @return a ResponseEntity object with either a success or an error message.
+	 */
+	@PostMapping(value="/make-user-admin", params="email")
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<String> makeUserAdminByEmail(@RequestParam("email") String userEmailAddress) 
+	{	
+		try {
+			userService.setUserRoleByEmail(userEmailAddress, UserType.ADMIN);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>("Successfully set user with e-mail " + userEmailAddress + " to admin!", HttpStatus.OK);
+	}
+	
+	/**
+	 * Removes a user's admin privileges by passing in the user's ID.
+	 * 
+	 * @param userId The target user's ID
+	 * @return a ResponseEntity object with either a success or an error message.
+	 */
+	@PostMapping(value="/make-user-admin", params="id")
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<String> makeUserAdminById(@RequestParam("id") Long userId) 
+	{	
+		try {
+			userService.setUserRoleById(userId, UserType.ADMIN);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>("Successfully set user with ID " + userId + " to admin!", HttpStatus.OK);
+	}
+	
+	/**
+	 * Removes a user's admin privileges by passing in the user's e-mail.
+	 * 
+	 * @param userEmailAddress The target user's e-mail
+	 * @return a ResponseEntity object with either a success or an error message.
+	 */
+	@PostMapping(value="/make-user-non-admin", params="email")
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<String> makeUserNonAdminByEmail(@RequestParam("email") String userEmailAddress) {
+		try {
+			userService.setUserRoleByEmail(userEmailAddress, UserType.USER);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>("Successfully set user with e-mail " + userEmailAddress + " to non-admin!", HttpStatus.OK);
+	}
+	
+	/**
+	 * Removes a user's admin privileges by passing in the user's ID.
+	 * 
+	 * @param userId The target user's id
+	 * @return a ResponseEntity object with either a success or an error message.
+	 */
+	@PostMapping(value="/make-user-non-admin", params="id")
+	@Secured("ROLE_ADMIN")
+	public ResponseEntity<String> makeUserNonAdminById(@RequestParam("id") Long userId) 
+	{	
+		try {
+			userService.setUserRoleById(userId, UserType.USER);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>("Successfully set user with ID " + userId + " to non-admin!", HttpStatus.OK);
+	}
+	
+	/**
 	 * This method sends a password reset e-mail 
 	 * to a specified e-mail address (if there exists a user with that address).
 	 * The user service does the actual work (it generates a reset token and then sends an e-mail).
@@ -190,7 +265,7 @@ public class UserController {
 		try {
 			userService.createResetPasswordTokenAndSendEmail(userEmailAddress);
 		} catch (UserNotFoundException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<>("Successfully sent password reset e-mail to " + userEmailAddress, HttpStatus.OK);
@@ -217,7 +292,7 @@ public class UserController {
 	{
 		boolean isValidToken = userService.isValidPasswordResetToken(token);
 		if (!isValidToken) {
-			return new ResponseEntity<>("Invalid password reset link!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Invalid password reset link/token!", HttpStatus.BAD_REQUEST);
 		}
 		else {
 			if ( !(newPassword.equals(matchingNewPassword)) ) {
@@ -227,89 +302,10 @@ public class UserController {
 				return new ResponseEntity<String>("Invalid new password!", HttpStatus.BAD_REQUEST);
 			}
 			
-			try {
-				userService.changePasswordByToken(token, newPassword);
-			} catch (UserNotFoundException e) {
-				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-			}
+			userService.changePasswordByToken(token, newPassword);
 		}
 		
 		return new ResponseEntity<>("Successfully changed user password via token!", HttpStatus.OK);
-	}
-	
-	/**
-	 * Gives a user admin privileges by passing in the user's e-mail.
-	 * 
-	 * @param userEmailAddress The target user's e-mail
-	 * @return a ResponseEntity object with either a success or an error message.
-	 */
-	@PostMapping(value="/make-user-admin", params="email")
-	@Secured("ROLE_ADMIN")
-	public ResponseEntity<String> makeUserAdminByEmail(@RequestParam("email") String userEmailAddress) 
-	{	
-		try {
-			userService.setUserRoleByEmail(userEmailAddress, UserType.ADMIN);
-		} catch (UserNotFoundException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-		return new ResponseEntity<>("Successfully set user with e-mail " + userEmailAddress + " to admin!", HttpStatus.OK);
-	}
-	
-	/**
-	 * Removes a user's admin privileges by passing in the user's ID.
-	 * 
-	 * @param userId The target user's ID
-	 * @return a ResponseEntity object with either a success or an error message.
-	 */
-	@PostMapping(value="/make-user-admin", params="id")
-	@Secured("ROLE_ADMIN")
-	public ResponseEntity<String> makeUserAdminById(@RequestParam("id") Long userId) 
-	{	
-		try {
-			userService.setUserRoleById(userId, UserType.ADMIN);
-		} catch (UserNotFoundException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-		return new ResponseEntity<>("Successfully set user with ID " + userId + " to admin!", HttpStatus.OK);
-	}
-	
-	/**
-	 * Removes a user's admin privileges by passing in the user's e-mail.
-	 * 
-	 * @param userEmailAddress The target user's e-mail
-	 * @return a ResponseEntity object with either a success or an error message.
-	 */
-	@PostMapping(value="/make-user-non-admin", params="email")
-	@Secured("ROLE_ADMIN")
-	public ResponseEntity<String> makeUserNonAdminByEmail(@RequestParam("email") String userEmailAddress) {
-		try {
-			userService.setUserRoleByEmail(userEmailAddress, UserType.USER);
-		} catch (UserNotFoundException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-		return new ResponseEntity<>("Successfully set user with e-mail " + userEmailAddress + " to non-admin!", HttpStatus.OK);
-	}
-	
-	/**
-	 * Removes a user's admin privileges by passing in the user's ID.
-	 * 
-	 * @param userId The target user's id
-	 * @return a ResponseEntity object with either a success or an error message.
-	 */
-	@PostMapping(value="/make-user-non-admin", params="id")
-	@Secured("ROLE_ADMIN")
-	public ResponseEntity<String> makeUserNonAdminById(@RequestParam("id") Long userId) 
-	{	
-		try {
-			userService.setUserRoleById(userId, UserType.USER);
-		} catch (UserNotFoundException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-		return new ResponseEntity<>("Successfully set user with ID " + userId + " to non-admin!", HttpStatus.OK);
 	}
 
 }

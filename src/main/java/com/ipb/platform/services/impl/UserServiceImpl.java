@@ -231,8 +231,7 @@ public class UserServiceImpl
 	 * @return true if there is a user with such an e-mail address, false otherwise
 	 */
 	private boolean emailExists(String email) {
-		Optional<UserEntity> userWithThisEmail = userRepository.findByEmail(email);
-		return userWithThisEmail.isPresent();
+		return userRepository.existsByEmail(email);
     }
 	
 	/**
@@ -242,8 +241,7 @@ public class UserServiceImpl
 	 * @return true if there is a user with such an id, false otherwise
 	 */
 	private boolean userExists(Long id) {
-		Optional<UserEntity> userWithThisId = userRepository.findById(id);
-		return userWithThisId.isPresent();
+		return userRepository.existsById(id);
     }
 
 	/**
@@ -307,15 +305,9 @@ public class UserServiceImpl
 	 * @param newPassword The user's desired new password.
 	 */
 	@Override
-	public void changePasswordByToken(String token, String newPassword) 
-		throws UserNotFoundException 
-	{
+	public void changePasswordByToken(String token, String newPassword) {
 		PasswordResetToken resetToken = tokenRepository.findByToken(token);
 		UserEntity user = resetToken.getUser();
-
-		if (user == null || !userExists(user.getId()) ) {
-			throw new UserNotFoundException("User for this reset token is null or does not exist in database!");
-		}
 		
 		String newEncodedPassword = passwordEncoder.encode(newPassword);
 		user.setPassword(newEncodedPassword);
