@@ -1,7 +1,5 @@
 package com.ipb.platform.dto.responses;
 
-import java.io.File;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

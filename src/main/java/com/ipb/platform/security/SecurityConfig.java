@@ -47,6 +47,7 @@ public class SecurityConfig
 		    .and()
 			    .authorizeRequests()
 			    	.antMatchers("/profile/**").authenticated()
+			    	.antMatchers("/contact/**").authenticated()
 		    .and()
 		    	.formLogin()
 		    	.successHandler(customAuthenticationSuccessHandler())

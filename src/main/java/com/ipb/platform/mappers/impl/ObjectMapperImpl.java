@@ -1,8 +1,6 @@
 package com.ipb.platform.mappers.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Primary;
@@ -19,7 +17,6 @@ import com.ipb.platform.mappers.CategoryMapper;
 import com.ipb.platform.mappers.ImageMapper;
 import com.ipb.platform.mappers.ObjectMapper;
 import com.ipb.platform.persistence.CategoryRepository;
-import com.ipb.platform.persistence.entities.CategoryEntity;
 import com.ipb.platform.persistence.entities.CityEntity;
 import com.ipb.platform.persistence.entities.EventEntity;
 import com.ipb.platform.persistence.entities.ImageEntity;

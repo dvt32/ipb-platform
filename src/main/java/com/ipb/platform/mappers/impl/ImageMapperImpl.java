@@ -1,18 +1,10 @@
 package com.ipb.platform.mappers.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import java.io.UnsupportedEncodingException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ipb.platform.dto.requests.ImageRequestDTO;
 import com.ipb.platform.dto.responses.ImageResponseDTO;

@@ -1,7 +1,5 @@
 package com.ipb.platform.mappers;
 
-import org.springframework.stereotype.Service;
-
 import com.ipb.platform.dto.requests.LandmarkRequestDTO;
 import com.ipb.platform.dto.responses.LandmarkResponseDTO;
 import com.ipb.platform.persistence.entities.LandmarkEntity;

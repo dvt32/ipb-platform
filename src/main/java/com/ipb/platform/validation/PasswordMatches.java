@@ -11,6 +11,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/**
+ * This annotation is used 
+ * as a way to check if a user's two password field values match.
+ * 
+ * The actual implementation of the validation
+ * is in the class specified in the @Constraint annotation below.
+ * 
+ * @author dvt32
+ */
 @Target({TYPE, ANNOTATION_TYPE}) 
 @Retention(RUNTIME)
 @Constraint(validatedBy = PasswordMatchesValidator.class)

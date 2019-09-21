@@ -68,3 +68,27 @@ b) Then an e-mail is sent to the specified address with a password reset link (i
 Use that link and send a POST request to with an added request param "newPassword" and "matchingNewPassword" to the URL. 
 
 (Example: http://localhost:8190/users/reset-password?token=7a6761ac-453e-451a-ab5e-8cda55f84ee3&newPassword=1234567&matchingNewPassword=1234567)
+
+---
+
+6. Basic Contact Form (Text Message + 1 Attached File w/ Max Size 1 MB)
+
+Note: files are stored in the "files" folder (contained in the project's main directory)
+
+a) Send submission: HTTP POST request to http://localhost:8190/contact. Example JSON request body:
+
+{
+	"message": "I noticed an error on your page..."
+}
+
+Note: creating a submission returns a response with a location header containing the newly created submission's ID, which can be used to attach a file to that submission afterwards.
+
+b) Attach file to an existing submission: HTTP POST request to http://localhost:8190/contact/{submissionId}/file with form-data attribute "file" which has the value of a file
+
+c) Retrieve attached file for an existing submission: HTTP GET request to http://localhost:8190/contact/{submissionId}/file
+
+d) Get list of all submissions' data (as JSON array): HTTP GET request to http://localhost:8190/contact/all
+
+e) Get specific submission data (as JSON): HTTP GET request to http://localhost:8190/contact/{submissionId}
+
+f) Delete specific submission: HTTP DELETE request to http://localhost:8190/contact/{submissionId}

@@ -1,11 +1,7 @@
 package com.ipb.platform.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,10 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ipb.platform.dto.requests.EventRequestDTO;
 import com.ipb.platform.dto.responses.EventResponseDTO;
-import com.ipb.platform.mappers.ImageMapper;
-import com.ipb.platform.persistence.entities.EventEntity;
-import com.ipb.platform.persistence.entities.ImageEntity;
-import com.ipb.platform.services.ImageService;
 import com.ipb.platform.services.EventService;
 
 import lombok.AllArgsConstructor;

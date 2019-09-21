@@ -6,17 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.ipb.platform.dto.requests.ImageRequestDTO;
-import com.ipb.platform.dto.requests.ObjectRequestDTO;
 import com.ipb.platform.dto.responses.ImageResponseDTO;
-import com.ipb.platform.dto.responses.ObjectResponseDTO;
 import com.ipb.platform.mappers.ImageMapper;
-import com.ipb.platform.mappers.ObjectMapper;
 import com.ipb.platform.persistence.ImageRepository;
-import com.ipb.platform.persistence.ObjectRepository;
 import com.ipb.platform.persistence.entities.ImageEntity;
 import com.ipb.platform.persistence.entities.ObjectEntity;
 import com.ipb.platform.services.ImageService;
-import com.ipb.platform.services.ObjectService;
 
 import lombok.AllArgsConstructor;
 
