@@ -59,7 +59,7 @@ public class UserEntity {
 	private String lastName;
 	
 	@NotNull(message = "Birth date must not be be null!")
-	private Long birthdayInMilliseconds;
+    private java.sql.Date birthday;
 	
 	@Enumerated(EnumType.STRING)
 	private UserType type;
