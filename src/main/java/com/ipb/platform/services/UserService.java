@@ -44,7 +44,7 @@ public interface UserService {
 	
 	boolean isValidPasswordResetToken(String token);
 	
-	void changePasswordByToken(String token, String newPassword) throws UserNotFoundException;
+	void changePasswordByToken(String token, String newPassword);
 	
 	void setUserRoleByEmail(String userEmail, UserType role) throws UserNotFoundException;
 	

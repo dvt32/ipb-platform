@@ -377,7 +377,7 @@ public class ContactFormSubmissionController {
 			return new ResponseEntity<>(
 				"Successfully accepted & added object to database from suggestion with ID " + id + "! "
 				+ e.getMessage(), 
-				HttpStatus.NOT_FOUND
+				HttpStatus.OK
 			);
 		}
 		
@@ -416,7 +416,7 @@ public class ContactFormSubmissionController {
 			return new ResponseEntity<>(
 				"Successfully rejected object suggestion with ID " + id + "! "
 				+ e.getMessage(), 
-				HttpStatus.NOT_FOUND
+				HttpStatus.OK
 			);
 		}
 		
@@ -452,7 +452,7 @@ public class ContactFormSubmissionController {
 			return new ResponseEntity<>(
 				"Successfully accepted & added event to database from suggestion with ID " + id + "! "
 				+ e.getMessage(), 
-				HttpStatus.NOT_FOUND
+				HttpStatus.OK
 			);
 		} catch (CityNotFoundException e) {
 			return new ResponseEntity<>(
@@ -497,7 +497,7 @@ public class ContactFormSubmissionController {
 			return new ResponseEntity<>(
 				"Successfully rejected event suggestion with ID " + id + "! "
 				+ e.getMessage(), 
-				HttpStatus.NOT_FOUND
+				HttpStatus.OK
 			);
 		}
 		
