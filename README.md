@@ -1,18 +1,18 @@
 # How to use REST services
 
-1. Login: 
+### 1. Login: 
 
 HTTP POST request to http://localhost:8190/login with body params "username" and "password" where the username is the user's email
 
 ---
 
-2. Logout: 
+### 2. Logout: 
 
 HTTP GET request to http://localhost:8190/logout
 
 ---
 
-3. CRUD user operations (general)
+### 3. CRUD user operations (general)
 
 a) Create user: HTTP POST request to "http://localhost:8190/users". Example request body (JSON):
 
@@ -48,7 +48,7 @@ Note: only a logged-in admin can perform this operation
 
 ---
 
-4. CRUD user operations (for currently logged-in user)
+### 4. CRUD user operations (for currently logged-in user)
 
 a) Change password: HTTP POST request to http://localhost:8190/profile/change-password with request params "oldPassword", "newPassword" and "matchingNewPassword"
 
@@ -60,7 +60,7 @@ d) Delete user data: HTTP DELETE request to http://localhost:8190/profile (logs 
 
 ---
 
-5. Forgot / Reset password
+### 5. Forgot / Reset password
 
 a) HTTP POST request http://localhost:8190/users/forgot-password with request param "email" (the user's email) (Example: http://localhost:8190/users/forgot-password?email=test@test.com)
 
@@ -71,7 +71,7 @@ Use that link and send a POST request to with an added request param "newPasswor
 
 ---
 
-6. Basic Contact Form (Text Message + 1 Attached File w/ Max Size 1 MB)
+### 6. Basic Contact Form (Text Message + 1 Attached File w/ Max Size 1 MB)
 
 Note: files are stored in the "files" folder (contained in the project's main directory)
 
@@ -92,3 +92,52 @@ d) Get list of all submissions' data (as JSON array): HTTP GET request to http:/
 e) Get specific submission data (as JSON): HTTP GET request to http://localhost:8190/contact/{submissionId}
 
 f) Delete specific submission: HTTP DELETE request to http://localhost:8190/contact/{submissionId}
+
+---
+
+### 7. Extended Contact Form (Suggest Objects/Events & Accept/Reject Them)
+
+a) Suggest object: HTTP POST request to http://localhost:8190/contact/object-suggestions. Example JSON request body:
+
+{ 
+	"name": "My Suggested Object",
+	"description": "My suggested object's description...",
+	"type": "LANDMARK"
+}
+
+b) Suggest event: HTTP POST request to http://localhost:8190/contact/event-suggestions. Example JSON request body:
+
+{ 
+	"name": "My Suggested Event",
+	"description": "My suggested event's description...",
+	"startDate": "10-10-1995 01:00",
+	"endDate": "10-10-1996 03:37",
+	"cityId": 1
+}
+
+Note: "cityId" refers to the ID of an existing city in the database
+Note 2: The date format is "dd-MM-yyyy hh:mm".
+
+c) Accept object suggestion: HTTP POST request to http://localhost:8190/contact/object-suggestions/{id}/accept (where "id" refers to an existing object suggestion's id)
+
+d) Accept event suggestion: HTTP POST request to http://localhost:8190/contact/event-suggestions/{id}/accept (where "id" refers to an existing event suggestion's id)
+
+e) Reject object suggestion: HTTP POST request to http://localhost:8190/contact/object-suggestions/{id}/reject (where "id" refers to an existing object suggestion's id)
+
+f) Reject object suggestion w/ Message: HTTP POST request to http://localhost:8190/contact/object-suggestions/{id}/reject?message=Your rejection message here (where "id" refers to an existing object suggestion's id and "message" is the request param rejection message to be included in the notification e-mail)
+
+g) Reject event suggestion: HTTP POST request to http://localhost:8190/contact/event-suggestions/{id}/reject (where "id" refers to an existing event suggestion's id)
+
+h) Reject event suggestion w/ Message: HTTP POST request to http://localhost:8190/contact/event-suggestions/{id}/reject?message=Your rejection message here (where "id" refers to an existing event suggestion's id and "message" is the request param rejection message to be included in the notification e-mail)
+
+i) Retrieve specific object suggestion's data: HTTP GET request to http://localhost:8190/contact/object-suggestions/{id} (where "id" refers to an existing object suggestion's id)
+
+j) Retrieve specific event suggestion's data: HTTP GET request to http://localhost:8190/contact/event-suggestions/{id} (where "id" refers to an existing event suggestion's id)
+
+k) Retrieve all object suggestions' data: HTTP GET request to http://localhost:8190/contact/object-suggestions/all
+
+l) Retrieve all event suggestions' data: HTTP GET request to http://localhost:8190/contact/event-suggestions/all
+
+---
+
+Postman request collection: https://www.getpostman.com/collections/26f5476168d5c306ce2d
