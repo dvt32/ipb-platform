@@ -1,7 +1,6 @@
 package com.ipb.platform.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -212,11 +211,14 @@ public class UserServiceImpl
 	}
 
 	/**
-	 * Updates the user's password in the database
+	 * Updates the user's password in the database. 
+	 * 
+	 * Note: this method is called AFTER the password 
+	 * has been confirmed to be valid (not empty, at least six chars etc)
+	 * by the user controller.
 	 */
 	@Override
 	public void changePassword(UserRequestDTO userRequestDTO, String newPassword) {
-		// if is valid password (not empty, six chars etc)
 		String newEncodedPassword = passwordEncoder.encode(newPassword);
 		userRequestDTO.setPassword(newEncodedPassword);
 		userRequestDTO.setMatchingPassword(newEncodedPassword);
@@ -301,6 +303,10 @@ public class UserServiceImpl
 	/**
 	 * Changes the password of an existing user with a valid password reset token.
 	 * 
+	 * Note: this method is called AFTER the password 
+	 * has been confirmed to be valid (not empty, at least six chars etc)
+	 * by the user controller.
+	 * 
 	 * @param token A token string
 	 * @param newPassword The user's desired new password.
 	 */
@@ -358,7 +364,7 @@ public class UserServiceImpl
 		return ( 
 			password != null && 
 			!password.trim().isEmpty() && 
-			password.length() >= 6 
+			password.trim().length() >= 6 
 		);
 	}
 

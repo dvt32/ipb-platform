@@ -49,6 +49,12 @@ public class CustomAuthenticationSuccessHandler
     		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "IP blocked for " + loginService.getBlockTimeInMinutes() + " minutes!");
     	}
     	else {
+    		response.getWriter().write(
+    			"Successfully logged in! " + 
+    			"Username: " +  authentication.getName().toString() + " " +
+    			"User roles: " + authentication.getAuthorities().toString()
+    		);
+    	
     		SavedRequest savedRequest = requestCache.getRequest(request, response);
 
     	    if (savedRequest == null) {
@@ -63,7 +69,7 @@ public class CustomAuthenticationSuccessHandler
     	        clearAuthenticationAttributes(request);
     	        return;
     	    }
-    	
+    	    
     	    clearAuthenticationAttributes(request);
     	}
     }

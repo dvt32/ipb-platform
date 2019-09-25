@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
  * This class defines Spring Security configuration
@@ -53,7 +54,8 @@ public class SecurityConfig
 		    	.successHandler(customAuthenticationSuccessHandler())
 		    	.failureHandler(customAuthenticationFailureHandler())
 		    .and()
-		    	.logout();
+		    	.logout()
+		    	.logoutSuccessHandler(customLogoutSuccessHandler());
 		
 		// Allow access to H2 console for development purposes
 		http.authorizeRequests().antMatchers("/h2_console/**").permitAll();
@@ -81,6 +83,11 @@ public class SecurityConfig
     @Bean
     public AuthenticationEntryPoint restAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
+    }
+    
+    @Bean
+    public LogoutSuccessHandler customLogoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
     
 	/**

@@ -45,7 +45,7 @@ public class PasswordResetToken {
 	private String token;
 	
 	@OneToOne
-	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private UserEntity user;
 	
 }

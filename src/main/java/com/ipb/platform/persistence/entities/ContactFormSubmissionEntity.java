@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * This class represents a "contact form submission" entity in the database.
@@ -21,6 +22,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Getter
 @Setter
 @Table(name="Contact_Form_Submissions")
